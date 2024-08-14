@@ -1,0 +1,300 @@
+   /* Adicione ao styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    position: relative;
+}
+
+.menu-button {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    display: inline-block;
+    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+}
+
+.menu-button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+    text-decoration: none;
+}
+
+.menu-button:hover {
+    background-color: #6d1616;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+}
+
+header {
+    background-color: #6d1616;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    top: -150px; /* Inicialmente fora da tela */
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    transition: top 0.3s;
+}
+
+header.sticky {
+   top: 0;
+}
+
+header .logo img {
+    width: 150px;
+    height: 90px;
+}
+    header nav a {
+        color: #fff;
+        text-decoration: none;
+        margin: 0 10px;
+    }
+
+    header nav a:hover {
+        text-decoration: underline;
+    }
+
+    .hero {
+        background-image: url(../img/image1.jpeg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        height: 900px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hero-text h1 {
+        color: #fff;
+        
+        text-shadow: 5px 7px 1px rgba(0, 0, 0, 0.5);
+        font-size: 60px;
+        text-align: center;
+        margin: 0;
+    }
+
+    .gallery {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .gallery h2 {
+        margin-bottom: 20px;
+    }
+
+    .gallery-images {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .gallery-images img {
+        max-width: 200px;
+        height: auto;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+
+    .gallery-images img:hover {
+        transform: scale(1.05);
+    }
+
+    .history, .tickets, .curiosities {
+        padding: 20px;
+        background-color: #f4f4f4;
+        margin: 20px 0;
+        border-radius: 10px;
+    }
+
+    .history h2, .tickets h2, .curiosities h2 {
+        color: #6d1616;
+    }
+
+    .tickets button {
+        background-color: #6d1616;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .tickets button:hover {
+        background-color: #5b1414;
+    }
+
+    .lightbox {
+        display: none; /* Inicialmente oculto */
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.8); /* Fundo escuro semi-transparente */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .lightbox-content {
+        max-width: 90%;
+        max-height: 90%;
+    }
+
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover {
+        color: #caa055;
+    }
+
+
+    /* Adicione ao styles.css */
+
+    .location-history {
+        width: 95%;
+        margin: auto;
+        display: flex;
+        
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 20px 0;
+        gap: 10px;
+    }
+    
+    .location, .additional-content {
+        background-color: #f4f4f4;
+        width: 30%; /* Alterado para acomodar três colunas */
+        padding: 20px;
+        margin-left: 20px;
+        border-radius: 10px;
+    }
+    .history{
+        width: 60%;
+    }
+    .additional-content{
+        margin: auto;
+        width: 90%;
+    }
+    .map-container {
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        border-radius: 8px;
+    }
+    
+    .map-container iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        
+    }
+    
+    .history h2, .additional-content h2, .location h2 {
+        color: #6d1616;
+    }
+    
+    footer {
+        background-color: #6d1616;
+        color: #fff;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-section {
+        flex: 1;
+        padding: 10px;
+    }
+    
+    .contact-info {
+        text-align: left;
+        height: 10vh;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-right: 1px white solid;
+    }
+    
+    .social-media {
+        text-align: center;
+        border-right: 1px white solid;
+        height: 10vh;
+    }
+    
+    .social-media a {
+        margin: 0 10px;
+        color: white;
+    }
+    
+    .social-media img {
+        width: 24px;
+        height: 24px;
+        transition: transform 0.3s;
+    }
+    
+    .social-media img:hover {
+        transform: scale(1.1);
+    }
+    .linha1{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+    }
+    .logo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .logo img {
+        width: 200px;
+        height: 140px;
+    }
+    
+

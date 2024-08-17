@@ -45,29 +45,22 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     text-decoration: none;
 }
-
 header {
-    background-color: #6d1616;
-    color: #fff;
+  
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
     position: fixed;
-    top: -150px; /* Inicialmente fora da tela */
-    left: 0;
+    top: 0;
     width: 100%;
-    z-index: 9999;
-    transition: top 0.3s;
+    z-index: 100;
+    transition: padding 0.3s ease, background-color 0.5s ease-in-out;
 }
 
-header.sticky {
-   top: 0;
-}
-
-header .logo img {
-    width: 150px;
-    height: 90px;
+.logo img {
+    height: 100px;
+    transition: height 0.3s ease;
 }
     header nav a {
         color: #fff;
@@ -189,29 +182,43 @@ header .logo img {
     /* Adicione ao styles.css */
 
     .location-history {
-        width: 95%;
+        width: 100%;
         margin: auto;
         display: flex;
-        
+        flex-direction: column;
         flex-wrap: wrap;
         justify-content: space-between;
         margin: 20px 0;
         gap: 10px;
     }
+    .location{
+        height: 100vh;
+        width: 95vw;
+        margin: auto;
+    }
+    .location .map-container{
+        height:90vh;
+        width: 90vw;
+        margin: auto;
+    }
+    .location .map-container iframe{
+        height: 90vh;
+        width: 90vw;
+    }
     
     .location, .additional-content {
         background-color: #f4f4f4;
-        width: 30%; /* Alterado para acomodar três colunas */
         padding: 20px;
         margin-left: 20px;
         border-radius: 10px;
     }
     .history{
-        width: 60%;
+        width: 100%;
+        margin: auto;
     }
     .additional-content{
         margin: auto;
-        width: 90%;
+        width: 100%;
     }
     .map-container {
         width: 100%;

@@ -19,7 +19,7 @@
             <a href="../home/index.html" class="menu-button">Home</a>
             <a href="../historia/historia.html" class="menu-button">História</a>
             <a href="../eventos/eventos.html" class="menu-button">Eventos</a>
-            <a href="../contatos/contatos.html" class="menu-button">Contatos</a>
+            <a href="../login/login.hml" class="menu-button">Login</a>
         </nav>
     </header>
 
@@ -78,6 +78,43 @@
             </div>
         </div>
     </footer>
+    <div class="header">
+        <div id="profile-info" class="profile-info"></div>
+        <button id="logout-button" class="hidden">Sair</button>
+        <button id="login-button">Entrar</button>
+    </div>
+
+
+    <script type="module">
+        import { isUserAuthenticated, getAuthenticatedUser, logoutUser } from './firebase-app.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const profileInfo = document.getElementById('profile-info');
+            const logoutButton = document.getElementById('logout-button');
+            const loginButton = document.getElementById('login-button');
+
+            if (isUserAuthenticated()) {
+                const user = getAuthenticatedUser();
+                profileInfo.textContent = `Bem-vindo, ${user.email}`;
+                profileInfo.style.display = 'block';
+                logoutButton.style.display = 'block';
+                loginButton.style.display = 'none';
+            } else {
+                profileInfo.style.display = 'none';
+                logoutButton.style.display = 'none';
+                loginButton.style.display = 'block';
+            }
+
+            logoutButton.addEventListener('click', async () => {
+                await logoutUser();
+                window.location.reload();
+            });
+
+            loginButton.addEventListener('click', () => {
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
 
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

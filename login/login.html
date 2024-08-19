@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Entrar</h2>
+        <form id="login-form">
+            <input type="email" id="login-email" placeholder="Digite seu e-mail" required>
+            <input type="password" id="login-password" placeholder="Digite sua senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+        <a href="register.html">Criar nova conta</a>
+    </div>
+
+    <div id="loader" class="loader"></div>
+
+  
+    <script type="module">
+        import { loginUser } from './firebase-app.js';
+
+        const loginForm = document.getElementById('login-form');
+        const loader = document.getElementById('loader');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            loader.style.display = 'flex'; 
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                await loginUser(email, password);
+                alert('Login bem-sucedido!');
+                window.location.href = '../home/index.html';
+            } catch (error) {
+                alert('Erro no login: ' + error.message);
+            } finally {
+                loader.style.display = 'none'; 
+            }
+        });
+    </script>
+</body>
+</html>

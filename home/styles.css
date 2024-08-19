@@ -1,7 +1,10 @@
-   /* Adicione ao styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Platypi:ital,wght@0,300..800;1,300..800&display=swap');
+
+*{
+    font-family: "Platypi", serif;
+}
 
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     color: #333;
@@ -13,7 +16,7 @@ body {
     text-decoration: none;
     padding: 10px 20px;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 1.6rem;
     text-align: center;
     display: inline-block;
     transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
@@ -40,13 +43,12 @@ body {
 }
 
 .menu-button:hover {
-    background-color: #6d1616;
     transform: scale(1.1);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     text-decoration: none;
 }
 header {
-  
+  background-color: transparent;
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -55,7 +57,7 @@ header {
     top: 0;
     width: 100%;
     z-index: 100;
-    transition: padding 0.3s ease, background-color 0.5s ease-in-out;
+    transition: padding 0.3s ease, background-color 0.3s ease-in-out;
 }
 
 .logo img {
@@ -77,17 +79,17 @@ header {
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
-        height: 900px;
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
     .hero-text h1 {
-        color: #fff;
+        color: #6d1616;
         
-        text-shadow: 5px 7px 1px rgba(0, 0, 0, 0.5);
-        font-size: 60px;
+        text-shadow: 8px 10px 5px rgba(0, 0, 0, 0.5);
+        font-size: 6rem;
         text-align: center;
         margin: 0;
     }
@@ -179,7 +181,6 @@ header {
     }
 
 
-    /* Adicione ao styles.css */
 
     .location-history {
         width: 100%;
@@ -304,4 +305,62 @@ header {
         height: 140px;
     }
     
+.d-none {
+    display: none;
+    display: flex;
+    flex-direction: column;
+}
 
+#user-menu {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#login-menu {
+    display: flex;
+    align-items: center;
+}
+nav{
+    display: flex;
+}
+
+.esp{
+    background: none;
+    border: none;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

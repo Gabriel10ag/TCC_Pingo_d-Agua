@@ -271,3 +271,33 @@ footer {
     width: 200px;
     height: 140px;
 }
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f4f4f4;
+}
+
+.profile-info {
+    font-size: 18px;
+    color: #333;
+}
+
+.hidden {
+    display: none;
+}
+
+button {
+    background-color: #6d1616;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #5a0e0e;
+}
+

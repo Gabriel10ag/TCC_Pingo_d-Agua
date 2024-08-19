@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Cadastrar</h2>
+        <form id="register-form">
+            <input type="text" id="register-full-name" placeholder="Digite seu nome completo" required>
+            <input type="email" id="register-email" placeholder="Digite seu e-mail" required>
+            <input type="password" id="register-password" placeholder="Digite sua senha" required>
+            <button type="submit">Cadastrar</button>
+        </form>
+        <a href="login.html">Já tem uma conta? Entrar</a>
+    </div>
+
+    <div id="loader" class="loader"></div>
+
+
+    <script type="module">
+        import { registerUser } from './firebase-app.js';
+
+        const registerForm = document.getElementById('register-form');
+        const loader = document.getElementById('loader');
+
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            loader.style.display = 'flex'; 
+
+            const fullName = document.getElementById('register-full-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+
+            try {
+                await registerUser(email, password, fullName);
+                alert('Usuário cadastrado com sucesso!');
+                window.location.href = 'login.html';
+            } catch (error) {
+                alert('Erro no cadastro: ' + error.message);
+            } finally {
+                loader.style.display = 'none'; 
+            }
+        });
+    </script>
+</body>
+</html>

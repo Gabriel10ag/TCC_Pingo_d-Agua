@@ -1,4 +1,3 @@
-        // script.js
 
         document.addEventListener('DOMContentLoaded', function() {
             var galleryItems = document.querySelectorAll('.gallery-item');
@@ -23,8 +22,6 @@
                 }
             });
         });
-
- // Adicione ao script do HTML ou um arquivo separado .js
  window.addEventListener('scroll', function() {
     const header = document.querySelector('header');
     const logo = document.querySelector('.logo img');
@@ -36,7 +33,7 @@
         logo.style.width = '160px'
     } else {
         header.style.padding = '20px';
-        header.style.backgroundColor = 'transparent'; // Define transparente ao rolar para cima
+        header.style.backgroundColor = 'transparent';
         logo.style.height = '100px';
     }
 });

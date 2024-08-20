@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Platypi:ital,wght@0,300..800;1,300..800&display=swap');
+
+*{
+    font-family: "Platypi", serif;
+}
+
 /* styles.css */
 
 /* Garante que o HTML e o body ocupem toda a altura da tela */
@@ -27,7 +33,7 @@ body {
     text-decoration: none;
     padding: 10px 20px;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 1.6rem;
     text-align: center;
     display: inline-block;
     transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
@@ -184,4 +190,62 @@ button {
 
 button:hover {
     background-color: #5a0e0e;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.d-none {
+    display: none;
+    display: flex;
+    flex-direction: column;
+}
+
+#user-menu {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#login-menu {
+    display: flex;
+    align-items: center;
+}
+nav{
+    display: flex;
+}
+
+.esp{
+    background: none;
+    border: none;
 }

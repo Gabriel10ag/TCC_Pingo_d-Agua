@@ -249,3 +249,24 @@ nav{
     background: none;
     border: none;
 }
+
+.botao{
+    text-decoration: none;
+    border-radius: 10px;
+    background-color: #6d1616;
+    color: white;
+    font-size: 1.2rem;
+    padding: 10px;
+    transition: 0.4ms;
+    text-align: center;
+}
+.botoes{
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.botao:hover{
+    box-shadow: 5px 5px #6d1616;
+    background-color: #333;
+}

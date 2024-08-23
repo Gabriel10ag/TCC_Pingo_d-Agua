@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js';
-import { getAuth } from 'https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js';
+import { getAuth} from 'https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js';
 const firebaseConfig = {
     apiKey: "AIzaSyDjbdj0Q2GLbTQZK4Qw-I2PZh2Foa0ObPI",
     authDomain: "fazendapingod-agua.firebaseapp.com",

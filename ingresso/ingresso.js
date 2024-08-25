@@ -39,3 +39,12 @@ logo.style.height = '100px';
 });
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    const cardImage = document.getElementById("cardImage");
+    const defaultImage = "../img/ingresso(TESTE)/ticket.png";
+
+    if (!cardImage.src || cardImage.src === defaultImage) {
+        // Define a imagem padrão se a imagem não estiver definida ou estiver igual à imagem padrão
+        cardImage.src = defaultImage;
+    }
+});

@@ -86,7 +86,7 @@ header {
     }
 
     .hero-text h1 {
-        color: #6d1616;
+        color: #fff;
         
         text-shadow: 8px 10px 5px rgba(0, 0, 0, 0.5);
         font-size: 6rem;
@@ -364,3 +364,4 @@ nav{
     text-decoration: none;
     cursor: pointer;
 }
+

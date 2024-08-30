@@ -9,6 +9,9 @@ html, body {
     height: 100%;
     margin: 0;
 }
+.main-content{
+  margin-top: 100px;
+}
 
 /* Configura o body para usar flexbox e permitir que o conteúdo principal ocupe o espaço restante */
 body {
@@ -247,4 +250,30 @@ nav{
 .esp{
     background: none;
     border: none;
+}
+.textoinicial h1{
+    color: #6d1616;
+    font-size: 3rem;
+    text-align: center;
+}
+
+.inicial{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    margin: auto;
+    gap: 10px;
+    margin-top: 100px;
+
+}
+.inicial .img1{
+    background-image: url(../img/image1.jpeg);
+    height:40vh;
+    width: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.text1{
+    width: 50%;
 }

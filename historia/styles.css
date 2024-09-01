@@ -251,13 +251,13 @@ nav{
     background: none;
     border: none;
 }
-<<<<<<< HEAD
+
 .inicio{
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
-=======
+}
 .textoinicial h1{
     color: #6d1616;
     font-size: 3rem;
@@ -283,5 +283,4 @@ nav{
 }
 .text1{
     width: 50%;
->>>>>>> 7b496206cdfc4d53d7b01b5979c6a46a7e431429
 }

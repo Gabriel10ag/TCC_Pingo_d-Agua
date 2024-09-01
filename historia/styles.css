@@ -248,3 +248,9 @@ nav{
     background: none;
     border: none;
 }
+.inicio{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}

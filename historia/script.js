@@ -81,4 +81,3 @@ async function populateProfileModal() {
     }
 }
 
-console.log('fullName:', displayName);

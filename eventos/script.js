@@ -104,6 +104,9 @@ const eventoForm = document.getElementById('evento-form');
 eventoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    const submitButton = e.submitter;  // Captura o botão que foi clicado
+    submitButton.disabled = true;  // Desativa o botão para evitar múltiplas submissões
+
     const titulo = document.getElementById('titulo').value;
     const descricao = document.getElementById('descricao').value;
     const data = document.getElementById('data').value;
@@ -125,15 +128,19 @@ eventoForm.addEventListener('submit', async (e) => {
             imagemUrl: imageUrl,
             criadoEm: new Date()
         });
+
         alert("Evento inserido com sucesso!");
         eventoForm.reset();
-        const inserirEventoModal = new bootstrap.Modal(document.getElementById('inserir-evento-modal'));
         inserirEventoModal.hide();
+
     } catch (error) {
         console.error("Erro ao inserir evento: ", error);
         alert("Erro ao inserir evento.");
+    } finally {
+        submitButton.disabled = false;  // Reativa o botão após a tentativa de submissão
     }
 });
+
 
 const eventosContainer = document.getElementById('eventos-container');
 

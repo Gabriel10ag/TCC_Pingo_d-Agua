@@ -259,6 +259,7 @@ nav{
     justify-content: space-between;
 }
 .textoinicial h1{
+    
     color: #6d1616;
     font-size: 3rem;
     text-align: center;
@@ -274,13 +275,33 @@ nav{
 
 }
 .inicial .img1{
-    background-image: url(../img/image1.jpeg);
-    height:40vh;
+    box-shadow:4px 9px grey;
+    border-radius: 10px;
+    background-image: url(../img/historia/1.jpg);
+    height:70vh;
     width: 50%;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    
 }
 .text1{
+    line-height: 70px;
     width: 50%;
+    color: #6d1616;
+    display: flex;
+    font-size:x-large;
+    text-align: center;
+    align-items: center;
+}
+
+.img2{
+    background-image: url(../img/historia/3.jpg);
+    width:  50%;
+    height: 70vh;
+    border-radius: 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 4px 9px grey;
 }

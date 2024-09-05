@@ -96,3 +96,21 @@ function closeLightbox() {
     const lightbox = document.getElementById('lightbox');
     lightbox.style.display = 'none'; // Oculta a lightbox
 }
+
+
+function prevImage(event) {
+    event.stopPropagation(); // Impede que o evento clique na lightbox feche a lightbox
+    currentIndex = (currentIndex > 0) ? currentIndex - 1 : currentImages.length - 1;
+    updateLightboxImage();
+}
+
+function nextImage(event) {
+    event.stopPropagation(); // Impede que o evento clique na lightbox feche a lightbox
+    currentIndex = (currentIndex < currentImages.length - 1) ? currentIndex + 1 : 0;
+    updateLightboxImage();
+}
+
+function updateLightboxImage() {
+    const lightboxImg = document.getElementById('lightbox-img');
+    lightboxImg.src = currentImages[currentIndex];
+}

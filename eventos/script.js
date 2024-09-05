@@ -113,6 +113,7 @@ eventoForm.addEventListener('submit', async (e) => {
     const hora = document.getElementById('hora').value;
     const preco = document.getElementById('preco').value;
     const imagemFile = document.getElementById('imagem').files[0];
+    const id = document.getElementById('id').value;
 
     try {
         const storageRef = ref(storage, `eventos/${imagemFile.name}`);
@@ -124,6 +125,7 @@ eventoForm.addEventListener('submit', async (e) => {
             descricao: descricao,
             data: data,
             hora: hora,
+            id: id ,
             preco: parseFloat(preco),
             imagemUrl: imageUrl,
             criadoEm: new Date()
@@ -164,11 +166,11 @@ function criarCardDeEvento(evento, id) {
             <div class="card-body">
                 <h5 class="card-title" id="titulocard">${evento.titulo}</h5>
                 <p class="card-text" id="textocard">${evento.descricao}</p>
-		<p class="card-text"><small class="text-muted">${evento.data} às ${evento.hora}</small></p>
+                <p class="card-text"><small class="text-muted">${evento.data} às ${evento.hora}</small></p>
             </div>
             <div class="mb-5 d-flex justify-content-around">
                 <h3 class="card-preco" id="precocard"><p class="card-text">Preço: R$ ${evento.preco.toFixed(2)}</p></h3>
-               <button class="btn btn-success btn-comprar" data-id="${id}" data-imagem="${evento.imagemUrl}">Comprar</button>
+                <button class="btn btn-success btn-comprar" data-id="${id}" data-preco="${evento.preco}">Comprar</button>
             </div>
         </div>
     </div>
@@ -176,14 +178,35 @@ function criarCardDeEvento(evento, id) {
     eventosContainer.insertAdjacentHTML('beforeend', cardHtml);
 }
 
+
+// Função para abrir o modal de pagamento e preencher as informações
+function abrirModalPagamento(event) {
+    const eventId = event.target.getAttribute('data-id');
+    const preco = parseFloat(event.target.getAttribute('data-preco')); // Recupera o preço do evento
+
+    // Exibir o modal de pagamento
+    const pagamentoModal = new bootstrap.Modal(document.getElementById('pagamento-modal'));
+    pagamentoModal.show();
+
+    // Preencher o modal com o preço do evento selecionado
+    document.getElementById('quantidade').value = 1; // Resetar a quantidade
+    document.getElementById('total').value = `R$ ${preco.toFixed(2)}`; // Exibir o valor inicial
+
+    // Atualizar o preço conforme a quantidade de ingressos
+    document.getElementById('quantidade').addEventListener('input', function () {
+        const quantidade = parseInt(this.value, 10);
+        const total = preco * quantidade;
+        document.getElementById('total').value = `R$ ${total.toFixed(2)}`;
+    });
+}
+
+// Adicionar evento de clique nos botões de "Comprar"
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('btn-comprar')) {
-        const eventId = e.target.getAttribute('data-id');
-        const pagamentoModal = new bootstrap.Modal(document.getElementById('pagamento-modal'));
-        pagamentoModal.show();
-       
+        abrirModalPagamento(e);
     }
 });
+
 
 async function excluirEvento(eventId, imagemUrl) {
     try {

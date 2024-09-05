@@ -269,6 +269,7 @@ body {
     margin: 0;
     padding: 0;
     color: #333;
+    height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -343,6 +344,7 @@ footer {
     background-color: #6d1616;
     color: #fff;
     padding: 20px;
+    margin-top: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;

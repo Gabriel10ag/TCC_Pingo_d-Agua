@@ -67,6 +67,10 @@
                         <label for="preco" class="form-label">Preço</label>
                         <input type="number" class="form-control" id="preco" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="id" class="form-label">ID</label>
+                        <input type="number" class="form-control" id="id" required>
+                    </div>
                     <button type="submit" class="btn btn-primary">Inserir Evento</button>
                 </form>
             </div>
@@ -123,20 +127,29 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="pagamento-modal" tabindex="-1" aria-labelledby="pagamentoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="pagamentoModalLabel">Pagamento</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Modal de Pagamento -->
+<div class="modal fade" id="pagamento-modal" tabindex="-1" aria-labelledby="pagamentoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pagamentoModalLabel">Pagamento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="quantidade" class="form-label">Quantidade de Ingressos</label>
+                    <input type="number" id="quantidade" class="form-control" value="1" min="1">
                 </div>
-                <div class="modal-body">
-                    <div id="paymentBrick_container"></div>
-
+                <div class="mb-3">
+                    <label for="total" class="form-label">Total a Pagar</label>
+                    <input type="text" id="total" class="form-control" readonly>
                 </div>
+                <div id="paymentBrick_container"></div>
             </div>
         </div>
     </div>
+</div>
+
     
     
     
@@ -217,7 +230,7 @@
     const renderPaymentBrick = async (bricksBuilder) => {
         const settings = {
             initialization: {
-                amount: 10000, // Valor de exemplo
+                amount:1000 , // Valor de exemplo
                 preferenceId: "<PREFERENCE_ID>",
                 payer: {
                     firstName: "",
@@ -282,7 +295,6 @@
 
 <script type="module" src="./firebase-config.js"></script>
 
-<!-- <script src="./api.js" type="module"></script> -->
 <script type="module" src="script.js"></script>
 
 

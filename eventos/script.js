@@ -181,23 +181,7 @@ document.addEventListener('click', (e) => {
         const eventId = e.target.getAttribute('data-id');
         const pagamentoModal = new bootstrap.Modal(document.getElementById('pagamento-modal'));
         pagamentoModal.show();
-        const mp = new MercadoPago('APP_USR-9758addf-f2f9-41bd-806d-1d45422219ce', {
-            locale: 'pt-BR'
-        });
-
-        fetch('/create_preference')
-        .then(response => response.json())
-        .then(data => {
-            mp.checkout({
-                preference: {
-                    id: data.preferenceId
-                },
-                render: {
-                    container: '#wallet_container',
-                    label: 'Pagar com Mercado Pago'
-                }
-            });
-        });
+       
     }
 });
 

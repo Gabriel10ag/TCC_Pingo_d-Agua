@@ -365,3 +365,59 @@ nav{
     cursor: pointer;
 }
 
+.container {
+    display: flex;
+    justify-content: space-between; /* Distribui os elementos nas extremidades do contêiner */
+    width: 100%; /* Garante que o contêiner ocupe toda a largura da página */
+    max-width: 1200px; /* Limita a largura máxima do contêiner, ajuste conforme necessário */
+    padding: 0 20px; /* Espaçamento interno nas laterais do contêiner */
+    box-sizing: border-box; /* Inclui padding na largura total do contêiner */
+}
+
+.img2 {
+    max-width: 100%; /* Ajusta a largura da imagem, você pode modificar conforme necessário */
+    height: auto; /* Mantém a proporção da imagem */
+}   
+
+.container {
+    display: flex;
+    justify-content: space-between; /* Distribui os elementos nas extremidades do contêiner */
+    width: 80%; /* Ajusta a largura do contêiner para 80% da largura da tela */
+    max-width: 1200px; /* Limita a largura máxima do contêiner */
+    padding: 20px; /* Adiciona espaçamento interno ao contêiner */
+    box-sizing: border-box; /* Inclui padding na largura total do contêiner */
+    background-color: white; /* Adiciona uma cor de fundo ao contêiner para melhor visualização */
+    border-radius: 8px; /* Adiciona bordas arredondadas ao contêiner */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra sutil ao contêiner */
+}
+
+.img1 {
+    max-width: 100%; /* Ajusta a largura da imagem */
+    height: auto; /* Mantém a proporção da imagem */
+}
+
+.texto1 {
+    max-width: calc(100% - 120px); /* Ajusta a largura máxima do texto, levando em consideração a largura da imagem e o padding */
+    margin: 0; /* Remove margens padrão do h1 */
+    padding: 0; /* Remove preenchimento padrão do h1 */
+}
+
+.container2 {
+    display: flex;
+    justify-content: space-between; /* Distribui os elementos nas extremidades do contêiner */
+    width: 100%; /* Garante que o contêiner ocupe toda a largura da página */
+    max-width: 1200px; /* Limita a largura máxima do contêiner */
+    padding: 0 20px; /* Espaçamento interno nas laterais do contêiner */
+    box-sizing: border-box; /* Inclui padding na largura total do contêiner */
+}
+
+.img2 {
+    max-width: 100%; /* Ajusta a largura da imagem */
+    height: auto; /* Mantém a proporção da imagem */
+}
+
+.texto2 {
+    max-width: calc(100% - 120px); /* Ajusta a largura máxima do texto, levando em consideração a largura da imagem e o padding */
+    margin: 0; /* Remove margens padrão do h1 */
+    padding: 0; /* Remove preenchimento padrão do h1 */
+}

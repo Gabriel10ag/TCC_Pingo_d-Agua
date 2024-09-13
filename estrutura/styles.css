@@ -1,9 +1,9 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Platypi:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 
 *{
-    font-family: "Platypi", serif;
-}/* Garante que o HTML e o body ocupem toda a altura da tela */
+    font-family: "Oswald", sans-serif;
+}
 html, body {
     height: 100%;
     margin: 0;
@@ -11,7 +11,7 @@ html, body {
 
 /* Configura o body para usar flexbox e permitir que o conteúdo principal ocupe o espaço restante */
 body {
-    font-family: Arial, sans-serif;
+    
     margin: 0;
     padding: 0;
     color: #333;

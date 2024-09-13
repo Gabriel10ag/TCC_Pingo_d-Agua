@@ -14,12 +14,14 @@
 <body>
     <header>
         <div class="logo">
-            <img src="../img/Logo Branco PNG (1).png" alt="Logo">
+            <a href="../home/index.html">
+                <img src="../img/Logo Branco PNG (1).png" alt="Logo">
+            </a>
         </div>
         <nav>
-            <a href="../home/index.html" class="menu-button">Home</a>
-            <a href="../historia/historia.html" class="menu-button">História</a>
             <a href="../estrutura/estrutura.html" class="menu-button">Estrutura</a>
+            <a href="../historia/historia.html" class="menu-button">História</a>
+            <a href="../eventos/eventos.html" class="menu-button">Eventos</a>
             <div id="login-menu">
                 <a id="login-button" href="../login/login.html" class="menu-button">Login</a>
             </div>
@@ -237,7 +239,7 @@
         const settings = {
             initialization: {
                 amount: 1000, // Valor de exemplo
-                preferenceId: "<PREFERENCE_ID>",
+                preferenceId: "<PREFERENCE_ID>", // Substitua pelo ID da preferência real
                 payer: {
                     firstName: "",
                     lastName: "",
@@ -249,36 +251,39 @@
                     style: { 
                         customVariables: { 
                             textPrimaryColor: "#6d1616",
-                             textSecondaryColor: "#6d1616", 
-                             inputBackgroundColor: "#f7f7f7", 
-                             formBackgroundColor: "#ffffff", 
-                             baseColor: "#6d1616", 
-                             baseColorFirstVariant: "#6d1616",
-                              baseColorSecondVariant: "#6d1616",
-                               errorColor: "#d9534f",
-                                successColor: "#5bc0de",
-                                 outlinePrimaryColor: "#6d1616", 
-                                 outlineSecondaryColor: "#cccccc",
-                                  buttonTextColor: "#ffffff", 
-                                  fontSizeExtraSmall: "12px",
-                                   fontSizeSmall: "14px", 
-                                   fontSizeMedium: "16px", 
-                                   fontSizeLarge: "18px", 
-                                   fontSizeExtraLarge: "20px", 
-                                   fontWeightNormal: "400", 
-                                   fontWeightSemiBold: "600",
-                                    formInputsTextTransform: "none",
-                                     inputVerticalPadding: "10px",
-                                      inputHorizontalPadding: "15px", 
-                                      inputFocusedBoxShadow: "0 0 0 0.2rem rgba(109, 22, 22, 0.5)",
-                                       inputErrorFocusedBoxShadow: "0 0 0 0.2rem rgba(217, 83, 79, 0.5)", 
-                                       inputBorderWidth: "1px", inputFocusedBorderWidth: "2px",
-                                        borderRadiusSmall: "4px", borderRadiusMedium: "8px",
-                                         borderRadiusLarge: "12px", borderRadiusFull: "50px", 
-                                         formPadding: "20px" 
-                            },
+                            textSecondaryColor: "#6d1616",
+                            inputBackgroundColor: "#f7f7f7",
+                            formBackgroundColor: "#ffffff",
+                            baseColor: "#6d1616",
+                            baseColorFirstVariant: "#6d1616",
+                            baseColorSecondVariant: "#6d1616",
+                            errorColor: "#d9534f",
+                            successColor: "#5bc0de",
+                            outlinePrimaryColor: "#6d1616",
+                            outlineSecondaryColor: "#cccccc",
+                            buttonTextColor: "#ffffff",
+                            fontSizeExtraSmall: "12px",
+                            fontSizeSmall: "14px",
+                            fontSizeMedium: "16px",
+                            fontSizeLarge: "18px",
+                            fontSizeExtraLarge: "20px",
+                            fontWeightNormal: "400",
+                            fontWeightSemiBold: "600",
+                            formInputsTextTransform: "none",
+                            inputVerticalPadding: "10px",
+                            inputHorizontalPadding: "15px",
+                            inputFocusedBoxShadow: "0 0 0 0.2rem rgba(109, 22, 22, 0.5)",
+                            inputErrorFocusedBoxShadow: "0 0 0 0.2rem rgba(217, 83, 79, 0.5)",
+                            inputBorderWidth: "1px",
+                            inputFocusedBorderWidth: "2px",
+                            borderRadiusSmall: "4px",
+                            borderRadiusMedium: "8px",
+                            borderRadiusLarge: "12px",
+                            borderRadiusFull: "50px",
+                            formPadding: "20px"
                         },
                     },
+                },
                 paymentMethods: {
                     creditCard: "all",
                     debitCard: "all",
@@ -301,12 +306,8 @@
                             body: JSON.stringify(formData),
                         })
                             .then((response) => response.json())
-                            .then((response) => {
-                                resolve();
-                            })
-                            .catch((error) => {
-                                reject();
-                            });
+                            .then(() => resolve())
+                            .catch(() => reject());
                     });
                 },
                 onError: (error) => {
@@ -324,10 +325,8 @@
 
     // Renderizando o Payment Brick
     renderPaymentBrick(bricksBuilder);
-
 </script>
-
-
+    
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script type="module" src="./firebase-config.js"></script>

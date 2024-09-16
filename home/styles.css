@@ -364,59 +364,111 @@ nav{
     cursor: pointer;
 }
 
+.curiosidade1 {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    /* border: 1px solid #ddd; */
+    padding: 20px;
+    /* border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+}
+
+.text {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.text h1 {
+    color: #6d1616;
+}
+
+.image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.curiosidade2 {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    /* border: 1px solid #ddd; */
+    padding: 20px;
+    /* border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+}
+
+.image2 {
+    padding-right: 20px; /* Espaço entre a imagem e o texto */
+}
+
+.image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.text2 {
+    flex: 1;
+}
+
+.text2 h1 {
+    color: #6d1616;
+}
+
+
 .container {
     display: flex;
-    justify-content: space-between; /* Distribui os elementos nas extremidades do contêiner */
-    width: 100%; /* Garante que o contêiner ocupe toda a largura da página */
-    max-width: 1200px; /* Limita a largura máxima do contêiner, ajuste conforme necessário */
-    padding: 0 20px; /* Espaçamento interno nas laterais do contêiner */
-    box-sizing: border-box; /* Inclui padding na largura total do contêiner */
+    align-items: center;
+    background-color: #fff;
+    /* border: 1px solid #ddd; */
+    padding: 20px;
+    /* border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    max-width: 800px; /* Limita a largura máxima do contêiner */
+    width: 100%; /* Faz com que o contêiner use toda a largura disponível até o limite máximo */
 }
 
-.img2 {
-    max-width: 100%; /* Ajusta a largura da imagem, você pode modificar conforme necessário */
-    height: auto; /* Mantém a proporção da imagem */
-}   
+.text3 {
+    flex: 1;
+    padding-right: 20px; /* Espaço entre o texto e a imagem */
+}
 
-.container {
+.text3 h1 {
+    color: #6d1616;
+}
+
+.image3 img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.curiosidade4 {
     display: flex;
-    justify-content: space-between; /* Distribui os elementos nas extremidades do contêiner */
-    width: 80%; /* Ajusta a largura do contêiner para 80% da largura da tela */
-    max-width: 1200px; /* Limita a largura máxima do contêiner */
-    padding: 20px; /* Adiciona espaçamento interno ao contêiner */
-    box-sizing: border-box; /* Inclui padding na largura total do contêiner */
-    background-color: white; /* Adiciona uma cor de fundo ao contêiner para melhor visualização */
-    border-radius: 8px; /* Adiciona bordas arredondadas ao contêiner */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra sutil ao contêiner */
+    align-items: center;
+    background-color: #fff;
+    /* border: 1px solid #ddd; */
+    padding: 20px;
+    /* border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
-.img1 {
-    max-width: 100%; /* Ajusta a largura da imagem */
-    height: auto; /* Mantém a proporção da imagem */
+.image4 {
+    margin-right: 20px; /* Espaço entre a imagem e o texto */
 }
 
-.texto1 {
-    max-width: calc(100% - 120px); /* Ajusta a largura máxima do texto, levando em consideração a largura da imagem e o padding */
-    margin: 0; /* Remove margens padrão do h1 */
-    padding: 0; /* Remove preenchimento padrão do h1 */
+.image4 img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
 }
 
-.container2 {
-    display: flex;
-    justify-content: space-between; /* Distribui os elementos nas extremidades do contêiner */
-    width: 100%; /* Garante que o contêiner ocupe toda a largura da página */
-    max-width: 1200px; /* Limita a largura máxima do contêiner */
-    padding: 0 20px; /* Espaçamento interno nas laterais do contêiner */
-    box-sizing: border-box; /* Inclui padding na largura total do contêiner */
+.text4 {
+    flex: 1;
 }
 
-.img2 {
-    max-width: 100%; /* Ajusta a largura da imagem */
-    height: auto; /* Mantém a proporção da imagem */
-}
-
-.texto2 {
-    max-width: calc(100% - 120px); /* Ajusta a largura máxima do texto, levando em consideração a largura da imagem e o padding */
-    margin: 0; /* Remove margens padrão do h1 */
-    padding: 0; /* Remove preenchimento padrão do h1 */
+.text4 h1 {
+    color: #6d1616;
 }

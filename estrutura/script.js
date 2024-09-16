@@ -4,12 +4,13 @@ let currentIndex = 0;
 function showGallery(galleryNumber) {
     const gallery = document.getElementById('gallery');
     gallery.innerHTML = ''; // Limpa a galeria antes de inserir as novas imagens
-
+    menu = document.getElementById('menu')
     let images = [];
 
     // Define as imagens para cada galeria
     switch (galleryNumber) {
         case 1:
+            menu.style.height = '100%'; 
             images = [
                 '../img/t-33/1.jpeg',
                 '../img/t-33/2.jpeg',
@@ -22,6 +23,8 @@ function showGallery(galleryNumber) {
             ];
             break;
         case 2:
+            menu.style.height = '100%'; 
+            
             images = [
                 '../img/parisjet/1.jpeg',
                 '../img/parisjet/2.jpeg',
@@ -34,6 +37,7 @@ function showGallery(galleryNumber) {
             ];
             break;
         case 3:
+            menu.style.height = '100%'; 
             images = [
                 '../img/parisjet/2.jpeg',
                 '../img/parisjet/1.jpeg',
@@ -46,6 +50,7 @@ function showGallery(galleryNumber) {
             ];
             break;
         case 4:
+            menu.style.height = '100%'; 
             images = [
                 '../img/natureza/1.jpg',
                 '../img/natureza/2.jpg',
@@ -58,6 +63,7 @@ function showGallery(galleryNumber) {
             ];
             break;
         case 5:
+            menu.style.height = '100%'; 
             images = [
                 '../img/fauna/1.jpg',
                 '../img/fauna/2.jpg',

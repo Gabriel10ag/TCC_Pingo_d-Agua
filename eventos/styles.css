@@ -574,16 +574,27 @@ nav {
 
 /* Responsividade */
 @media (max-width: 768px) {
+    nav{
+        width: 100%;
+    }
     header .logo img {
-        width: 120px;
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
         height: auto;
+    }
+
+    .teste{
+        width: 1%;
     }
 
     footer {
         flex-direction: column;
         padding: 15px;
+        width: 100%;
     }
 
+    
     .card {
         width: 95%;
     }
@@ -591,17 +602,41 @@ nav {
     .modal-content {
         width: 90%;
     }
+    .footer-section .logo{
+        width: 1%;
+    }
+   
 }
 
 @media (max-width: 480px) {
+    nav{
+        width: 100%;
+    }
+    .linha1{
+        display: flex;
+        flex-direction: column;
+    }
+  
+    footer {
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        width: 100%;
+    }
+   
     header {
+        display: flex;
+        flex-wrap: wrap;
         flex-direction: column;
         align-items: center;
         padding: 10px;
+        width: 100%;
     }
-
+    .footer-section .logo{
+        width: 1%;
+    }
     header .logo img {
-        width: 100px;
+        width: 100%;
         height: auto;
     }
 

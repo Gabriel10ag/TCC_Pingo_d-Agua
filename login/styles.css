@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 
-*{
+* {
     font-family: "Oswald", sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -105,6 +108,7 @@ body::before {
     color: #aaa;
 }
 
+/* Loader (carregamento) */
 .loader {
     position: fixed;
     top: 0;
@@ -131,4 +135,67 @@ body::before {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* Responsividade */
+
+@media (max-width: 768px) {
+    .login-container {
+        height: auto;
+        padding: 20px;
+        width: 90%;
+        max-width: 90%;
+    }
+
+    .login-container h2 {
+        font-size: 20px;
+    }
+
+    .login-container input[type="text"], 
+    .login-container input[type="email"],
+    .login-container input[type="password"] {
+        font-size: 14px;
+    }
+
+    .login-container button {
+        font-size: 16px;
+    }
+
+    .login-container a {
+        font-size: 12px;
+    }
+
+    .login-container p {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 15px;
+        height: auto;
+    }
+
+    .login-container h2 {
+        font-size: 18px;
+    }
+
+    .login-container input[type="text"], 
+    .login-container input[type="email"],
+    .login-container input[type="password"] {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .login-container button {
+        font-size: 14px;
+    }
+
+    .login-container a {
+        font-size: 10px;
+    }
+
+    .login-container p {
+        font-size: 8px;
+    }
 }

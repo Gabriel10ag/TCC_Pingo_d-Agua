@@ -1,26 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 
-*{
-    font-family: "Oswald", sans-serif;
-}
-/* Garante que o HTML e o body ocupem toda a altura da tela */
+/* Reset básico e configuração de fonte */
 * {
-    padding: 0; /* Remove o padding padrão */
-    margin: 0; /* Remove a margem padrão */
-    box-sizing: border-box; /* Inclui padding e borda nas dimensões totais do elemento */
-    font-family: "Montserrat", sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Oswald", sans-serif;
 }
 
 /* Configura o body para usar flexbox e permitir que o conteúdo principal ocupe o espaço restante */
 body {
-   
     margin: 0;
     padding: 0;
     color: #333;
     display: flex;
     flex-direction: column;
+    height: 100vh;
 }
-
 
 /* Estiliza o container principal que envolve o conteúdo e o rodapé */
 #main-content {
@@ -98,14 +94,14 @@ footer {
     background-color: #6d1616;
     color: #fff;
     padding: 20px;
+    margin-top: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
     text-align: center;
-    position: relative; /* Manter a estrutura do rodapé */
-    width: 100%; /* Garante que o rodapé ocupe toda a largura da tela */
+    width: 100%;
 }
 
 /* Estiliza as seções dentro do rodapé */
@@ -226,6 +222,7 @@ button:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
 .d-none {
     display: none;
     display: flex;
@@ -242,11 +239,12 @@ button:hover {
     display: flex;
     align-items: center;
 }
-nav{
+
+nav {
     display: flex;
 }
 
-.esp{
+.esp {
     background: none;
     border: none;
 }
@@ -261,10 +259,10 @@ nav{
 html, body {
     height: 100%;
     margin: 0;
+    font-family: "Platypi", serif;
 }
 
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     color: #333;
@@ -350,7 +348,6 @@ footer {
     flex-wrap: wrap;
     flex-direction: column;
     text-align: center;
-    position: relative;
     width: 100%;
 }
 
@@ -520,7 +517,7 @@ nav {
     background-color: #333;
 }
 
-.text{
+.text {
     text-align: center;
     color: #6d1616;
 }
@@ -573,4 +570,56 @@ nav {
 
 .card-preco {
     color: #6d1616;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header .logo img {
+        width: 120px;
+        height: auto;
+    }
+
+    footer {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .card {
+        width: 95%;
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    header .logo img {
+        width: 100px;
+        height: auto;
+    }
+
+    .card-img-top {
+        height: 150px;
+    }
+
+    .footer-section {
+        padding: 5px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .menu-button {
+        font-size: 1.4rem;
+        padding: 8px 16px;
+    }
 }

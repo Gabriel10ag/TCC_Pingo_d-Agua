@@ -572,89 +572,56 @@ nav {
     color: #6d1616;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    nav{
-        width: 100%;
-    }
-    header .logo img {
-        display: flex;
-        width: 100%;
-        flex-wrap: wrap;
-        height: auto;
-    }
-
-    .teste{
-        width: 1%;
-    }
-
-    footer {
+@media (max-width: 1024px) {
+    header, footer {
         flex-direction: column;
-        padding: 15px;
-        width: 100%;
+        text-align: center;
     }
 
-    
-    .card {
-        width: 95%;
-    }
-
-    .modal-content {
-        width: 90%;
-    }
-    .footer-section .logo{
-        width: 1%;
-    }
-   
-}
-
-@media (max-width: 480px) {
-    nav{
-        width: 100%;
-    }
-    .linha1{
-        display: flex;
-        flex-direction: column;
-    }
-  
-    footer {
-        display: flex;
-        flex-direction: column;
-        padding: 15px;
-        width: 100%;
-    }
-   
-    header {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-        width: 100%;
-    }
-    .footer-section .logo{
-        width: 1%;
-    }
-    header .logo img {
-        width: 100%;
-        height: auto;
-    }
-
-    .card-img-top {
-        height: 150px;
-    }
-
-    .footer-section {
-        padding: 5px;
-    }
-
-    button {
-        font-size: 14px;
-        padding: 8px 16px;
+    .social-media, .contact-info {
+        text-align: center;
+        border-right: none;
     }
 
     .menu-button {
         font-size: 1.4rem;
-        padding: 8px 16px;
+        padding: 8px 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-button {
+        font-size: 1.2rem;
+        padding: 6px 10px;
+    }
+
+    header .logo img {
+        width: 120px;
+        height: 70px;
+    }
+
+    .linha1 {
+        flex-direction: column;
+    }
+    
+    footer {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-button {
+        font-size: 1rem;
+        padding: 5px 8px;
+    }
+
+    .logo img {
+        width: 100px;
+        height: 60px;
+    }
+
+    .modal-content {
+        width: 90%;
+        margin: 30% auto;
     }
 }

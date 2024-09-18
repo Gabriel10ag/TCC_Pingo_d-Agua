@@ -1,0 +1,385 @@
+/* styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+* {
+    font-family: "Oswald", sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+.main-content {
+    margin-top: 100px;
+}
+
+/* Configura o body para usar flexbox e permitir que o conteúdo principal ocupe o espaço restante */
+body {
+
+    margin: 0;
+    padding: 0;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estiliza o container principal que envolve o conteúdo e o rodapé */
+#main-content {
+    flex: 1;
+    /* Faz o conteúdo principal crescer para preencher o espaço restante */
+}
+
+/* Estiliza o botão do menu */
+.menu-button {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.6rem;
+    text-align: center;
+    display: inline-block;
+    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+}
+
+.menu-button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+    text-decoration: none;
+}
+
+.menu-button:hover {
+    background-color: #6d1616;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+}
+
+/* Estiliza o cabeçalho */
+header {
+    background-color: #6d1616;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+/* Estiliza a logo dentro do cabeçalho */
+header .logo img {
+    width: 150px;
+    height: 90px;
+}
+
+/* Estiliza os links de navegação dentro do cabeçalho */
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+/* Estiliza o rodapé */
+footer {
+    background-color: #6d1616;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+    width: 100%;
+}
+
+/* Estiliza as seções dentro do rodapé */
+.footer-section {
+    flex: 1;
+    padding: 10px;
+}
+
+.contact-info, .social-media {
+    text-align: center;
+    padding: 10px;
+}
+
+.social-media a {
+    margin: 0 10px;
+    color: white;
+}
+
+.social-media img {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s;
+}
+
+.social-media img:hover {
+    transform: scale(1.1);
+}
+
+.linha1 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    width: 200px;
+    height: 140px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f4f4f4;
+}
+
+.profile-info {
+    font-size: 18px;
+    color: #333;
+}
+
+.hidden {
+    display: none;
+}
+
+button {
+    background-color: #6d1616;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #5a0e0e;
+}
+
+/* Modal Estilos */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.d-none {
+    display: none;
+    display: flex;
+    flex-direction: column;
+}
+
+#user-menu {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#login-menu {
+    display: flex;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+}
+
+.esp {
+    background: none;
+    border: none;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 1024px) {
+    header, footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .social-media, .contact-info {
+        text-align: center;
+        border-right: none;
+    }
+
+    .menu-button {
+        font-size: 1.4rem;
+        padding: 8px 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-button {
+        font-size: 1.2rem;
+        padding: 6px 10px;
+    }
+
+    header .logo img {
+        width: 120px;
+        height: 70px;
+    }
+
+    .linha1 {
+        flex-direction: column;
+    }
+    
+    footer {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-button {
+        font-size: 1rem;
+        padding: 5px 8px;
+    }
+
+    .logo img {
+        width: 100px;
+        height: 60px;
+    }
+
+    .modal-content {
+        width: 90%;
+        margin: 30% auto;
+    }
+}
+
+
+.titulo h1 {
+    color: #6d1616;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    height: 200px;
+    text-align: center;
+}
+
+/* Responsividade para o título */
+@media (max-width: 768px) {
+    .titulo h1 {
+        font-size: 2.5rem;
+        height: auto; /* Ajusta a altura automaticamente em telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .titulo h1 {
+        font-size: 2rem;
+    }
+}
+
+
+/* Media Queries para garantir a responsividade */
+@media (max-width: 768px) {
+    .imagens img {
+        width: 100%; /* As imagens ocupam 100% da largura do container em telas menores */
+        height: auto; /* Remove a altura fixa para que as imagens se ajustem automaticamente */
+    }
+    .imagens {
+        flex-direction: column;
+    }
+}
+
+
+
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .historia {
+        width: 90%; /* Aumenta a largura do container em telas médias */
+    }
+
+    .item1, .item2, .item3, .item4 {
+        flex-direction: column; /* Alinha o texto e as imagens em coluna em telas menores */
+        text-align: center;
+        align-items: center; /* Centraliza o conteúdo */
+    }
+
+    .img, .texto {
+        width: 100%; /* Imagem e texto ocupam 100% da largura */
+        height: auto; /* Remove altura fixa para que se ajuste automaticamente */
+    }
+
+    .texto {
+        justify-content: flex-start; /* Texto alinhado ao topo em telas menores */
+    }
+}
+
+@media (max-width: 768px) {
+    .img {
+        height: 200px; /* Altura menor para telas médias */
+    }
+
+    .texto {
+        height: auto; /* Ajuste dinâmico da altura */
+    }
+}
+
+@media (max-width: 480px) {
+    .img {
+        height: 150px; /* Altura ainda menor para dispositivos móveis */
+    }
+
+    .texto {
+        gap: 0.5rem; /* Ajusta o espaçamento interno em telas pequenas */
+    }
+}

@@ -572,6 +572,17 @@ nav {
     color: #6d1616;
 }
 
+/* Style for the event card */
+.eventoDia {
+    margin-bottom: 20px; /* Adjust the space below the event card */
+}
+
+/* Style for the button */
+.exibirEventoDia {
+    margin-top: 20px; /* Adjust the space above the button */
+}
+
+
 @media (max-width: 1024px) {
     header, footer {
         flex-direction: column;

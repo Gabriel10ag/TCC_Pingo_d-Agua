@@ -15,16 +15,17 @@
             <button type="submit">Entrar</button>
         </form>
         <a href="register.html">Criar nova conta</a>
+        <a id="forgot-password" href="#">Esqueci a senha</a> <!-- Link para redefinir senha -->
     </div>
 
     <div id="loader" class="loader"></div>
 
-  
     <script type="module">
-        import { loginUser } from './firebase-app.js';
+        import { loginUser, resetPassword } from './firebase-app.js';
 
         const loginForm = document.getElementById('login-form');
         const loader = document.getElementById('loader');
+        const forgotPasswordLink = document.getElementById('forgot-password');
 
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -41,6 +42,24 @@
                 alert('Erro no login: ' + error.message);
             } finally {
                 loader.style.display = 'none'; 
+            }
+        });
+
+        forgotPasswordLink.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+
+            if (!email) {
+                alert('Por favor, insira seu e-mail para redefinir a senha.');
+                return;
+            }
+
+            try {
+                await resetPassword(email);
+                alert('E-mail de redefinição de senha enviado com sucesso! Verifique sua caixa de entrada.');
+            } catch (error) {
+                console.error('Erro ao enviar e-mail de redefinição:', error);
+                alert('Erro ao enviar e-mail de redefinição: ' + error.message);
             }
         });
     </script>

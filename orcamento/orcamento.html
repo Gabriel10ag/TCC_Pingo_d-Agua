@@ -33,7 +33,7 @@
     </header>
 
 
-    
+
 
     <div class="modal fade" id="profile-modal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -76,9 +76,87 @@
         </h1>
     </div>
 
-   
 
-    
+
+    <div class="container">
+        <h1>Solicitação de Orçamento</h1>
+        <p>Selecione os serviços que você deseja incluir no seu orçamento:</p>
+
+        <div class="service">
+            <img src="../img/orcamento/chef-cozinha.jpg" alt="Serviço 1">
+            <div class="service-details">
+                <h2>Buffet</h2>
+                <h6>A Fazenda Pingo D'Água conta com uma equipe de cozinheiros especializados e de extrema confiança,
+                    com anos de experiência no mercado. Eles estão prontos para proporcionar a melhor experiência
+                    gastronômica, garantindo sabores excepcionais e um atendimento de qualidade.</h6>
+                <p>Preço: R$ 100,00</p>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="servicos" value="servico1"> Selecionar Serviço 1
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="service">
+            <img src="../img/parisjet/8.jpeg" alt="Serviço 2">
+            <div class="service-details">
+                <h2>Serviço 2</h2>
+                <p>Preço: R$ 200,00</p>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="servicos" value="servico2"> Selecionar Serviço 2
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="service">
+            <img src="https://via.placeholder.com/100" alt="Serviço 3">
+            <div class="service-details">
+                <h2>Serviço 3</h2>
+                <p>Preço: R$ 150,00</p>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="servicos" value="servico3"> Selecionar Serviço 3
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="title-form">
+        <h2>Dados para contato</h2>
+        <h6> A equipe da Fazenda Pingo D'Água irá entrar em contato com você no prazo de até 3 dias úteis. Durante esse
+            contato, forneceremos todos os detalhes adicionais sobre os eventos que você deseja contratar.</h6>
+
+        </div>
+
+        <form>
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="telefone">Telefone:</label>
+                <input type="tel" id="telefone" name="telefone" required>
+            </div>
+            <div class="form-group">
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" required>
+            </div>
+
+        </form>
+
+        <br>
+        <br>
+
+        <button>Enviar Orçamento</button>
+    </div>
+
 
 
 

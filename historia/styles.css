@@ -106,19 +106,29 @@ footer {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    flex-direction: column;
     text-align: center;
-    width: 100%;
 }
 
-/* Estiliza as seções dentro do rodapé */
 .footer-section {
     flex: 1;
     padding: 10px;
 }
 
-.contact-info, .social-media {
+.contact-info {
+    text-align: left;
+    height: 10vh;
     text-align: center;
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px white solid;
+}
+
+.social-media {
+    text-align: center;
+    border-right: 1px white solid;
+    height: 10vh;
 }
 
 .social-media a {
@@ -135,15 +145,12 @@ footer {
 .social-media img:hover {
     transform: scale(1.1);
 }
-
-.linha1 {
+.linha1{
     display: flex;
     justify-content: space-between;
     width: 100%;
     align-items: center;
-    flex-wrap: wrap;
 }
-
 .logo {
     display: flex;
     flex-direction: column;
@@ -156,7 +163,6 @@ footer {
     width: 200px;
     height: 140px;
 }
-
 .header {
     display: flex;
     justify-content: space-between;

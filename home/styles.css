@@ -74,6 +74,7 @@ header {
     }
 
     .hero {
+        position: relative; /* Adicione esta linha */
         background-image: url(../img/image1.jpeg);
         background-repeat: no-repeat;
         background-size: cover;
@@ -83,19 +84,37 @@ header {
         justify-content: center;
         align-items: center;
     }
-
+    
+    .hero::before { 
+        content: ""; 
+        position: absolute; 
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.6); 
+        z-index: 1; 
+    }
+    
+    .hero-text {
+        position: relative; 
+        z-index: 2; 
+    }
+    
     .hero-text h1 {
         color: #fff;
-        
         text-shadow: 8px 10px 5px rgba(0, 0, 0, 0.5);
         font-size: 6rem;
         text-align: center;
         margin: 0;
     }
+    
 
     .gallery {
-        padding: 20px;
+        width:100%;
+        padding: 30px;
         text-align: center;
+        background-color: #f4f4f4;
     }
 
     .gallery h2 {
@@ -106,6 +125,7 @@ header {
         display: flex;
         justify-content: center;
         gap: 10px;
+        width: 100%;
         flex-wrap: wrap;
     }
 
@@ -121,14 +141,14 @@ header {
         transform: scale(1.05);
     }
 
-    .history, .tickets, .curiosities {
+    .history, .tickets  {
         padding: 20px;
         background-color: #f4f4f4;
         margin: 20px 0;
         border-radius: 10px;
     }
 
-    .history h2, .tickets h2, .curiosities h2 {
+    .history h2, .tickets h2  {
         color: #6d1616;
     }
 
@@ -181,24 +201,9 @@ header {
 
 
 
-    .location-history {
-        width: 100%;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        margin: 20px 0;
-        gap: 10px;
-    }
-    .location{
-        height: 100vh;
-        width: 95vw;
-        margin: auto;
-    }
     .location .map-container{
         height:90vh;
-        width: 90vw;
+        width: 100%;
         margin: auto;
     }
     .location .map-container iframe{
@@ -363,6 +368,13 @@ nav{
     text-decoration: none;
     cursor: pointer;
 }
+.containermain{
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    margin: auto;
+    padding: 10px;
+}
 
 .curiosidade1 {
     display: flex;
@@ -418,15 +430,14 @@ nav{
 }
 
 
-.container {
+.curiosidade3 {
     display: flex;
+
     align-items: center;
     background-color: #fff;
     /* border: 1px solid #ddd; */
     padding: 20px;
-    /* border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-    max-width: 800px; /* Limita a largura máxima do contêiner */
+
     width: 100%; /* Faz com que o contêiner use toda a largura disponível até o limite máximo */
 }
 
@@ -468,10 +479,14 @@ nav{
 .text4 {
     flex: 1;
 }
-
+.cur{
+    color: #5b1414;
+    background-color: #f4f4f4;
+}
 .text4 h1 {
     color: #6d1616;
 }
+
 
 @media (max-width: 1024px) {
     header, footer {

@@ -23,6 +23,7 @@
             <a href="../estrutura/estrutura.html" class="menu-button">Estrutura</a>
             <a href="../historia/historia.html" class="menu-button">História</a>
             <a href="../eventos/eventos.html" class="menu-button">Eventos</a>
+            <a href="../orcamento/orcamento.html" class="menu-button">Orçamento</a>
             <div id="login-menu">
                 <a id="login-button" href="../login/login.html" class="menu-button">Login</a>
             </div>
@@ -73,161 +74,134 @@
         </div>
     </section>
 
-    <section class="gallery" id="home">
-        <h2>Galeria de Fotos</h2>
-        <div class="gallery-images">
-            <img src="../img/image1.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image2.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image3.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image1.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image2.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image3.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image1.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image2.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image3.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image1.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image2.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image3.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image1.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image2.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image3.jpeg" alt="Imagem 1" class="gallery-item">
-            <img src="../img/image3.jpeg" alt="Imagem 1" class="gallery-item">
+        <div class="containermain">
 
+            <section class="gallery" id="home">
+                <h2>Galeria de Fotos</h2>
+                <div class="gallery-images">
+                    <img src="../img/image1.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image2.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image3.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image1.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image2.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image3.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image1.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image2.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image3.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image1.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image2.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image3.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image1.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image2.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image3.jpeg" alt="Imagem 1" class="gallery-item">
+                    <img src="../img/image3.jpeg" alt="Imagem 1" class="gallery-item">
+        
+                </div>
+            </section>
+        
+            <div id="lightbox" class="lightbox">
+                <span class="close">&times;</span>
+                <img class="lightbox-content" id="lightbox-img">
+            </div>
+        
+            
+                <div class="location">
+                    <h2>Localização</h2>
+                    <div class="map-container">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3663.334979106124!2d-47.87636452593153!3d-23.339875553490156!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c5d94496f27929%3A0x75c282ca38c1d51a!2sFazenda%20Pingo%20D&#39;agua%2C%20Tatu%C3%AD!5e0!3m2!1spt-BR!2sbr!4v1723225979412!5m2!1spt-BR!2sbr"
+                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+                <!-- <div class="additional-content">
+                    <h2>Mais Informações</h2>
+                    <p>Aqui você pode adicionar mais informações, como uma lista de serviços, depoimentos, ou qualquer outro
+                        conteúdo relevante.</p>
+                </div>
+            </section> -->
+        
+            <section class="tickets">
+                <h2>Eventos da Semana</h2>
+                <p>Informações sobre os próximos eventos, incluindo datas, horários e preços.</p>
+                <button class="exibirEventoDia"type="submit" id="show-events"> Ver Evento da Semana </button>
+                <div class="eventoDia" id="events-list"></div> <!-- Div para exibir os eventos -->
+            </section>
+        
+            <section >
+                <h2 class="cur">Curiosidades do Local</h2>
+        
+                <div class="curiosidade1">
+                    <div class="text">
+                        
+                        <h1>Árvores centenárias</h1>
+                        <p> Um lugar que encanta por sua natureza 
+                            exuberante e pela magnitude que envolve esse 
+                            símbolo da história de Tatuí.
+                             Nossas árvores centenárias e o paisagismo 
+                            transformam nosso espaço no cenário perfeito 
+                            para contar histórias.
+                            </p>
+                    </div>
+                    <div class="image">
+                        <img src="../img/curiosidades/arvorecent.png" alt="Descrição da Imagem">
+                    </div>
+                </div>
+        
+                <div class="curiosidade2">
+                    <div class="image2">
+                        <img src="../img/curiosidades/grandlago.png" alt="Descrição da Imagem">
+                    </div>
+                    <div class="text2">
+                        <h1>Grandioso Lago</h1>
+                        <p>A Fazenda Pingo D’água tem um charme singular, e foi totalmente 
+                            repaginada para receber todos os tipos de eventos. 
+                            Nossos diversos cenários, as margens de um 
+                            grandioso lago, proporcionam uma experiência 
+                            campestre e inesquecível.</p>
+                    </div>
+                </div>
+        
+                <div class="curiosidade3">
+                    <div class="text3">
+                        <h1>Salão Bell Ranger</h1>
+                        <p>Uma homenagem ao icônico helicóptero Bell 
+                            Ranger, símbolo da liberdade nos céus.
+                             O helicóptero Bell Ranger era conhecido por sua 
+                            capacidade de acesso a locais remotos.
+                             O salão oferece a mesma agilidade e praticidade 
+                            do helicóptero, com um ambiente versátil que se 
+                            adapta a diferentes tipos de eventos.
+                             O design leve e arejado do salão evoca a 
+                            sensação de liberdade que só a aviação proporciona.
+                            </p>
+                    </div>
+                    <div class="image3">
+                        <img src="../img/curiosidades/salaoranger.png" alt="Descrição da Imagem">
+                    </div>
+                </div>
+        
+                <div class="curiosidade4">
+                    <div class="image4">
+                        <img src="../img/curiosidades/jardins.png" alt="Descrição da Imagem">
+                    </div>
+                    <div class="text4">
+                        <h1>Jardins Floridos</h1>
+                        <p>Os espaços da fazenda são amplos e 
+                            bem cuidados, com jardins floridos e um 
+                            exuberante lago. 
+                            A Fazenda Pingo D'Água conta com uma 
+                            estrutura moderna e completa, pensada 
+                            para atender a todos os tipos de eventos.
+                             É o lugar perfeito para quem busca 
+                            realizar um evento inesquecível, pois 
+                            combina beleza natural com infraestrutura 
+                            moderna</p>
+                    </div>
+                </div>
+        
+            </section>
         </div>
-    </section>
-
-    <div id="lightbox" class="lightbox">
-        <span class="close">&times;</span>
-        <img class="lightbox-content" id="lightbox-img">
-    </div>
-
-    <section class="location-history">
-        <!-- <div class="history">
-            <h2>História da Fazenda</h2>
-            <p>Aqui vai um breve texto sobre a história da fazenda... Lorem ipsum dolor sit amet, consectetur
-                adipisicing elit. Eveniet est incidunt ipsum qui repellat modi ad aspernatur optio maiores unde
-                possimus... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi deserunt saepe totam, vel
-                illo ut deleniti! Iste beatae aspernatur dolorem ipsam quibusdam! Ea possimus ab sit accusamus
-                voluptatum facere aliquam.
-                Atque similique error voluptatum reiciendis pariatur eaque animi officiis a, minima quia iure laudantium
-                totam libero debitis dolor recusandae sapiente! Consequatur aliquam quia minus. Unde facilis dolor
-                molestiae veniam accusamus.
-                Inventore eligendi aliquam, recusandae quidem placeat sequi corrupti, alias hic, natus ut nihil!
-                Necessitatibus, quo veniam laborum qui, doloribus, laudantium facere omnis voluptates rerum adipisci
-                maiores distinctio fugiat accusamus laboriosam?
-                Sequi error tenetur enim unde cumque saepe blanditiis, laboriosam similique corrupti laudantium sint,
-                nulla amet excepturi? Aliquid voluptatem expedita, odio delectus facere labore totam, repellat placeat
-                quibusdam ratione quasi consequuntur?
-                Architecto doloribus non a quas quaerat harum accusantium nisi possimus ex praesentium, earum
-                exercitationem velit officiis similique obcaecati ullam assumenda quia tempora! Rerum labore maiores
-                sed. Soluta inventore exercitationem voluptate.
-                Facere est itaque nihil a fuga. Quisquam ex est fuga assumenda quae esse vel deserunt earum, architecto
-                optio praesentium sunt voluptates, repellat, iusto ad ab rerum quis. Nihil, provident quaerat.
-                Doloremque ipsum fugiat veritatis tenetur praesentium? Ipsa provident consectetur dicta ducimus impedit
-                alias eveniet vero quibusdam, possimus ea rerum fuga sed eum asperiores ad commodi adipisci amet dolore
-                esse pariatur.
-                Rem dolorum hic, dolores sit unde ad explicabo deleniti, ipsa nisi vero, fugiat tenetur nihil
-                accusantium vel! Consequuntur culpa placeat ipsum provident sunt, facere quasi natus non aut est! Sint?
-                Vitae iure deleniti dolorem ratione voluptatum excepturi molestiae veniam sequi quod fugiat, amet nisi
-                eaque sit debitis cum minus, reiciendis sunt. Necessitatibus odit harum animi, excepturi ab tempore hic
-                molestias?</p>
-        </div> -->
-        <div class="location">
-            <h2>Localização</h2>
-            <div class="map-container">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3663.334979106124!2d-47.87636452593153!3d-23.339875553490156!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c5d94496f27929%3A0x75c282ca38c1d51a!2sFazenda%20Pingo%20D&#39;agua%2C%20Tatu%C3%AD!5e0!3m2!1spt-BR!2sbr!4v1723225979412!5m2!1spt-BR!2sbr"
-                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-        <!-- <div class="additional-content">
-            <h2>Mais Informações</h2>
-            <p>Aqui você pode adicionar mais informações, como uma lista de serviços, depoimentos, ou qualquer outro
-                conteúdo relevante.</p>
-        </div>
-    </section> -->
-
-    <section class="tickets">
-        <h2>Eventos da Semana</h2>
-        <p>Informações sobre os próximos eventos, incluindo datas, horários e preços.</p>
-        <button class="exibirEventoDia"type="submit" id="show-events"> Ver Evento da Semana </button>
-        <div class="eventoDia" id="events-list"></div> <!-- Div para exibir os eventos -->
-    </section>
-
-    <section class="curiosities">
-        <h2>Curiosidades do Local</h2>
-
-        <div class="curiosidade1">
-            <div class="text">
-                
-                <h1>Árvores centenárias</h1>
-                <p> Um lugar que encanta por sua natureza 
-                    exuberante e pela magnitude que envolve esse 
-                    símbolo da história de Tatuí.
-                     Nossas árvores centenárias e o paisagismo 
-                    transformam nosso espaço no cenário perfeito 
-                    para contar histórias.
-                    </p>
-            </div>
-            <div class="image">
-                <img src="../img/curiosidades/arvorecent.png" alt="Descrição da Imagem">
-            </div>
-        </div>
-
-        <div class="curiosidade2">
-            <div class="image2">
-                <img src="../img/curiosidades/grandlago.png" alt="Descrição da Imagem">
-            </div>
-            <div class="text2">
-                <h1>Grandioso Lago</h1>
-                <p>A Fazenda Pingo D’água tem um charme singular, e foi totalmente 
-                    repaginada para receber todos os tipos de eventos. 
-                    Nossos diversos cenários, as margens de um 
-                    grandioso lago, proporcionam uma experiência 
-                    campestre e inesquecível.</p>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="text3">
-                <h1>Salão Bell Ranger</h1>
-                <p>Uma homenagem ao icônico helicóptero Bell 
-                    Ranger, símbolo da liberdade nos céus.
-                     O helicóptero Bell Ranger era conhecido por sua 
-                    capacidade de acesso a locais remotos.
-                     O salão oferece a mesma agilidade e praticidade 
-                    do helicóptero, com um ambiente versátil que se 
-                    adapta a diferentes tipos de eventos.
-                     O design leve e arejado do salão evoca a 
-                    sensação de liberdade que só a aviação proporciona.
-                    </p>
-            </div>
-            <div class="image3">
-                <img src="../img/curiosidades/salaoranger.png" alt="Descrição da Imagem">
-            </div>
-        </div>
-
-        <div class="curiosidade4">
-            <div class="image4">
-                <img src="../img/curiosidades/jardins.png" alt="Descrição da Imagem">
-            </div>
-            <div class="text4">
-                <h1>Jardins Floridos</h1>
-                <p>Os espaços da fazenda são amplos e 
-                    bem cuidados, com jardins floridos e um 
-                    exuberante lago. 
-                    A Fazenda Pingo D'Água conta com uma 
-                    estrutura moderna e completa, pensada 
-                    para atender a todos os tipos de eventos.
-                     É o lugar perfeito para quem busca 
-                    realizar um evento inesquecível, pois 
-                    combina beleza natural com infraestrutura 
-                    moderna</p>
-            </div>
-        </div>
-
-    </section>
 
 
     <footer>

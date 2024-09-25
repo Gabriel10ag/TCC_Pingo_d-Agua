@@ -1,3 +1,6 @@
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const servicePrices = {
         'servico1': 100, // Buffet

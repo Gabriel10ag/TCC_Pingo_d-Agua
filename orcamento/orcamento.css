@@ -246,6 +246,29 @@ nav {
     background: none;
     border: none;
 }
+.wid{
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    flex-direction: column;
+    width: 70%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.1);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.wid form{
+    width: 80%;
+}
+.wid h2{
+    margin: auto;
+    
+}
+.btn-form{
+    border-radius: 10px;
+}
 
 /* Responsividade para telas menores */
 @media (max-width: 1024px) {
@@ -447,9 +470,15 @@ input[type="tel"]:focus {
 }
 
 .title-form h2 {
+    width: 80%;
+    text-align: center;
     color: #6d1616;
+}
+h6{
+    text-align: center;
 }
 
 .form-group label {
+    width: 100%;
     color: #6d1616;
 }

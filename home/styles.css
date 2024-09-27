@@ -112,6 +112,7 @@ header {
 
     .gallery {
         width:100%;
+        border-radius: 10px;
         padding: 30px;
         text-align: center;
         background-color: #f4f4f4;
@@ -119,6 +120,7 @@ header {
 
     .gallery h2 {
         margin-bottom: 20px;
+        color: #5b1414;
     }
 
     .gallery-images {
@@ -200,23 +202,13 @@ header {
     }
 
 
-
-    .location .map-container{
-        height:90vh;
-        width: 100%;
-        margin: auto;
-    }
-    .location .map-container iframe{
-        height: 90vh;
-        width: 90vw;
-    }
-    
-    .location, .additional-content {
-        background-color: #f4f4f4;
-        padding: 20px;
-        margin-left: 20px;
-        border-radius: 10px;
-    }
+.location{
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f4f4f4;
+}
     .history{
         width: 100%;
         margin: auto;
@@ -345,6 +337,11 @@ nav{
     overflow: auto;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
+}
+
+.cur{
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .modal-content {

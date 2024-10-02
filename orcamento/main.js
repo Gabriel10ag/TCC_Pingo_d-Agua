@@ -1,6 +1,3 @@
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
     const servicePrices = {
         'servico1': 100, // Buffet
@@ -29,3 +26,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     totalInput.value = 'R$ 0.00';
 });
+
+

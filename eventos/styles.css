@@ -249,18 +249,6 @@ nav {
     border: none;
 }
 
-/* Define o estilo do cartão */
-@import url('https://fonts.googleapis.com/css2?family=Platypi:ital,wght@0,300..800;1,300..800&display=swap');
-
-* {
-    font-family: "Platypi", serif;
-}
-
-html, body {
-    height: 100%;
-    margin: 0;
-    font-family: "Platypi", serif;
-}
 
 body {
     margin: 0;

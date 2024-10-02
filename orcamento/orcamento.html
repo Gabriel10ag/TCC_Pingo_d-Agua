@@ -36,7 +36,7 @@
 
 
 
-    <div class="modal fade" id="profile-modal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal fade " id="profile-modal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -96,6 +96,13 @@
                         <input type="checkbox" name="servicos" value="servico1"> Selecionar Serviço 1
                     </label>
                 </div>
+                <div class="opcao">
+                    <label for="opcao">
+                        <select name="opcao" id="opcao">
+                            
+                        </select>
+                    </label>
+                </div>
             </div>
         </div>
 
@@ -133,38 +140,42 @@
         </div>
         </div>
 
-        <div class="title-form">
-        <h2>Dados para contato</h2>
-        <h6> A equipe da Fazenda Pingo D'Água irá entrar em contato com você no prazo de até 3 dias úteis. Durante esse
-            contato, forneceremos todos os detalhes adicionais sobre os eventos que você deseja contratar.</h6>
-
+        
+        
+        <div class="wid">
+            <div class="title-form">
+            <h2>Dados para contato</h2>
+            <h6> A equipe da Fazenda Pingo D'Água irá entrar em contato com você no prazo de até 3 dias úteis. <br> Durante esse
+                contato, forneceremos todos os detalhes adicionais sobre os eventos que você deseja contratar.</h6>
+    
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefone">Telefone:</label>
+                    <input type="tel" id="telefone" name="telefone" required>
+                </div>
+                <div class="form-group">
+                    <label for="cpf">CPF:</label>
+                    <input type="text" id="cpf" name="cpf" required>
+                </div>
+    
+            </form>
+    
+            <br>
+            <br>
+    
+            <button class="btn-form" id="enviar" >Enviar Orçamento</button>
         </div>
 
-        <form>
-            <div class="form-group">
-                <label for="nome">Nome:</label>
-                <input type="text" id="nome" name="nome" required>
-            </div>
-            <div class="form-group">
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="telefone">Telefone:</label>
-                <input type="tel" id="telefone" name="telefone" required>
-            </div>
-            <div class="form-group">
-                <label for="cpf">CPF:</label>
-                <input type="text" id="cpf" name="cpf" required>
-            </div>
-
-        </form>
-
-        <br>
-        <br>
-
-        <button>Enviar Orçamento</button>
-    </div>
+        </div>
 
 
 
@@ -235,6 +246,8 @@
                 });
             });
         });
+
+        
     </script>
     <script src="./auth-check.js" type="module"></script>
    <script src="./firebase-config.js" type="module"></script>

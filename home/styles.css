@@ -120,6 +120,7 @@ header {
 
     .gallery h2 {
         margin-bottom: 20px;
+        color: #5b1414;
     }
 
     .gallery-images {
@@ -200,6 +201,7 @@ header {
         color: #caa055;
     }
 
+<<<<<<< HEAD
     .location{
         margin-top: 10px;
         background-color: #f4f4f4;
@@ -208,6 +210,16 @@ header {
     }
 
     
+=======
+
+.location{
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f4f4f4;
+}
+>>>>>>> 8284dff3655c344a40ca91371cec0da2a8b6977b
     .history{
         width: 100%;
         margin: auto;
@@ -336,6 +348,11 @@ nav{
     overflow: auto;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
+}
+
+.cur{
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .modal-content {

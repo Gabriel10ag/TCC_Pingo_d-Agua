@@ -104,8 +104,8 @@ const eventoForm = document.getElementById('evento-form');
 eventoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const submitButton = e.submitter;  // Captura o botão que foi clicado
-    submitButton.disabled = true;  // Desativa o botão para evitar múltiplas submissões
+    const submitButton = e.submitter;
+    submitButton.disabled = true;
 
     const titulo = document.getElementById('titulo').value;
     const descricao = document.getElementById('descricao').value;
@@ -125,7 +125,7 @@ eventoForm.addEventListener('submit', async (e) => {
             descricao: descricao,
             data: data,
             hora: hora,
-            id: id ,
+            id: id,
             preco: parseFloat(preco),
             imagemUrl: imageUrl,
             criadoEm: new Date()
@@ -139,10 +139,9 @@ eventoForm.addEventListener('submit', async (e) => {
         console.error("Erro ao inserir evento: ", error);
         alert("Erro ao inserir evento.");
     } finally {
-        submitButton.disabled = false;  // Reativa o botão após a tentativa de submissão
+        submitButton.disabled = false;
     }
 });
-
 
 const eventosContainer = document.getElementById('eventos-container');
 
@@ -161,52 +160,53 @@ async function carregarEventos() {
 function criarCardDeEvento(evento, id) {
     const cardHtml = `
         <div class="col-md-4 mb-4">
-        <div class="card">
-            <img src="${evento.imagemUrl}" class="card-img-top" alt="${evento.titulo}">
-            <div class="card-body">
-                <h5 class="card-title" id="titulocard">${evento.titulo}</h5>
-                <p class="card-text" id="textocard">${evento.descricao}</p>
-                <p class="card-text"><small class="text-muted">${evento.data} às ${evento.hora}</small></p>
-            </div>
-            <div class="mb-5 d-flex justify-content-around">
-                <h3 class="card-preco" id="precocard"><p class="card-text">Preço: R$ ${evento.preco.toFixed(2)}</p></h3>
-                <button class="btn btn-success btn-comprar" data-id="${id}" data-preco="${evento.preco}">Comprar</button>
+            <div class="card">
+                <img src="${evento.imagemUrl}" class="card-img-top" alt="${evento.titulo}">
+                <div class="card-body">
+                    <h5 class="card-title">${evento.titulo}</h5>
+                    <p class="card-text">${evento.descricao}</p>
+                    <p class="card-text"><small class="text-muted">${evento.data} às ${evento.hora}</small></p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="card-preco"><p class="card-text">Preço: R$ ${evento.preco.toFixed(2)}</p></h3>
+                    <input type="number" class="form-control quantidade-ingressos" min="1" value="1" style="width: 100;" data-preco="${evento.preco}">
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <p class="total-preco">Total: R$ ${evento.preco.toFixed(2)}</p>
+                    <button class="btn btn-success btn-comprar" data-id="${id}" data-preco="${evento.preco}">Comprar</button>
+                </div>
             </div>
         </div>
-    </div>
     `;
     eventosContainer.insertAdjacentHTML('beforeend', cardHtml);
-}
 
+    // Adiciona o evento para atualizar o preço total quando a quantidade muda
+    const cardElement = eventosContainer.lastElementChild;
+    const quantidadeInput = cardElement.querySelector('.quantidade-ingressos');
+    const totalPrecoElement = cardElement.querySelector('.total-preco');
 
-// Função para abrir o modal de pagamento e preencher as informações
-function abrirModalPagamento(event) {
-    const eventId = event.target.getAttribute('data-id');
-    const preco = parseFloat(event.target.getAttribute('data-preco')); // Recupera o preço do evento
-
-    // Exibir o modal de pagamento
-    const pagamentoModal = new bootstrap.Modal(document.getElementById('pagamento-modal'));
-    pagamentoModal.show();
-
-    // Preencher o modal com o preço do evento selecionado
-    document.getElementById('quantidade').value = 1; // Resetar a quantidade
-    document.getElementById('total').value = `R$ ${preco.toFixed(2)}`; // Exibir o valor inicial
-
-    // Atualizar o preço conforme a quantidade de ingressos
-    document.getElementById('quantidade').addEventListener('input', function () {
-        const quantidade = parseInt(this.value, 10);
+    quantidadeInput.addEventListener('input', function () {
+        const quantidade = parseInt(this.value, 10) || 1;
+        const preco = parseFloat(this.getAttribute('data-preco'));
         const total = preco * quantidade;
-        document.getElementById('total').value = `R$ ${total.toFixed(2)}`;
+        totalPrecoElement.textContent = `Total: R$ ${total.toFixed(2)}`;
+    });
+
+    // Adiciona evento de clique ao botão "Comprar"
+    const comprarButton = cardElement.querySelector('.btn-comprar');
+    comprarButton.addEventListener('click', function () {
+        const quantidade = parseInt(quantidadeInput.value, 10) || 1;
+        const total = parseFloat(totalPrecoElement.textContent.replace('Total: R$ ', '').replace('.', '').replace(',', '.'));
+        // Redireciona com o total como parâmetro na URL
+        window.location.href = `${window.location.pathname}?vl=${total.toFixed(2)}`;
     });
 }
 
-// Adicionar evento de clique nos botões de "Comprar"
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('btn-comprar')) {
         abrirModalPagamento(e);
     }
 });
-
 
 async function excluirEvento(eventId, imagemUrl) {
     try {
@@ -239,23 +239,16 @@ excluirEventosButton.addEventListener('click', async () => {
     const eventosSnapshot = await getDocs(collection(db, 'eventos'));
     eventosSnapshot.forEach((doc) => {
         const evento = doc.data();
-        const eventoItem = document.createElement('a');
-        eventoItem.href = "#";
-        eventoItem.classList.add('list-group-item', 'list-group-item-action');
-        eventoItem.textContent = `${evento.titulo} - ${evento.data}`;
-
-        eventoItem.addEventListener('click', async () => {
-            if (confirm(`Tem certeza que deseja excluir o evento "${evento.titulo}"?`)) {
-                await excluirEvento(doc.id, evento.imagemUrl);
-                eventoItem.remove();
-            }
-        });
-
-        listaEventosExcluir.appendChild(eventoItem);
+        const li = document.createElement('li');
+        li.textContent = `${evento.titulo} (${evento.data})`;
+        const excluirButton = document.createElement('button');
+        excluirButton.textContent = 'Excluir';
+        excluirButton.classList.add('btn', 'btn-danger', 'btn-sm', 'ml-2', 'btn-excluir');
+        excluirButton.setAttribute('data-id', doc.id);
+        excluirButton.setAttribute('data-imagem', evento.imagemUrl);
+        li.appendChild(excluirButton);
+        listaEventosExcluir.appendChild(li);
     });
-
-    const excluirEventoModal = new bootstrap.Modal(document.getElementById('excluir-evento-modal'));
-    excluirEventoModal.show();
 });
 
-document.addEventListener('DOMContentLoaded', carregarEventos);
+carregarEventos();

@@ -1,3 +1,56 @@
+<?php
+require_once 'api/preference.php'; // Inclua aqui o seu arquivo de configuração do Mercado Pago
+
+$amount = (float)trim($_GET['vl']);
+
+// Não exiba o valor na tela
+// echo "Valor passado para a API: $amount"; // Isso deve ser removido
+
+$body = json_decode(file_get_contents("php://input")); // Obtém o body da requisição
+
+if (isset($body->token)) {
+    $curl = curl_init();
+
+    $idempotency_key = uniqid(); // Gera uma chave única para idempotência
+
+    // Configuração da requisição cURL para a API do Mercado Pago
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.mercadopago.com/v1/payments',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode([
+            'payer' => [
+                'email' => $body->payer->email,
+                'identification' => [
+                    'type' => $body->payer->identification->type,
+                    'number' => $body->payer->identification->number,
+                ],
+            ],
+            'issuer_id' => $body->issuer_id,
+            'description' => $body->description ?? 'Descrição não disponível', // Garante que a descrição esteja definida
+            'installments' => $body->installments,
+            'payment_method_id' => $body->payment_method_id,
+            'token' => $body->token,
+            'transaction_amount' => $body->transaction_amount,
+        ]),
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json',
+            'X-Idempotency-Key: ' . $idempotency_key,
+            'Authorization: Bearer ' . $accesstoken // Token de acesso da sua aplicação
+        ),
+    ));
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+
+    // Certifique-se de que o retorno é um JSON válido
+    header('Content-Type: application/json');
+    echo $response; // Retorna o JSON da API Mercado Pago
+    exit; // Encerra o script após a resposta JSON
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -139,22 +192,18 @@
                     <h5 class="modal-title" id="pagamentoModalLabel">Pagamento</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="quantidade" class="form-label">Quantidade de Ingressos</label>
-                        <input type="number" id="quantidade" class="form-control" value="1" min="1">
-                    </div>
-                    <div class="mb-3">
-                        <label for="total" class="form-label">Total a Pagar</label>
-                        <input type="text" id="total" class="form-control" readonly>
-                    </div>
+                
                     <div id="paymentBrick_container"></div>
+                    
+<div id="statusScreenBrick_container"></div>
+
                 </div>
             </div>
         </div>
     </div>
 
-
+    <input type="hidden" id="valor_payment" value="<?= $amount; ?>">
+    <input type="hidden" id="preference_id" value="<?= $preference_id; ?>">
 
 
 
@@ -226,125 +275,172 @@
 </body>
 
 <script src="https://sdk.mercadopago.com/js/v2"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="app.js"></script>
 
 <script type="module">
-    // Inicializando o MercadoPago com a locale correta
-    const mp = new MercadoPago('APP_USR-77efaa11-dbb6-4e0d-8634-d84ace064755', {
-        locale: 'pt-BR'
-    });
+    const mp = new MercadoPago('TEST-40402515-dc10-4df4-a0a1-36279f278b92'); // Public Key de Teste
+const bricksBuilder = mp.bricks();
+const valorPayment = parseFloat($("#valor_payment").val()); // Captura o valor dinamicamente
 
-    const bricksBuilder = mp.bricks();
-
-    // Função para buscar o preferenceId do backend
-    const getPreferenceId = async () => {
-        try {
-            const response = await fetch('../checkout.php'); // Requisição para o backend
-            const data = await response.json();
-            return data.id; // Retorna o ID da preferência
-        } catch (error) {
-            console.error('Erro ao obter o preferenceId:', error);
-            return null;
-        }
-    };
-
-    // Função para renderizar o Payment Brick
-    const renderPaymentBrick = async (bricksBuilder) => {
-        const preferenceId = await getPreferenceId(); // Obtém o ID da preferência
-
-        if (!preferenceId) {
-            console.error("Falha ao obter o preferenceId.");
-            return;
-        }
-
-        const settings = {
-            initialization: {
-                amount: 1000, // Valor de exemplo
-                preferenceId: preferenceId, // Use o ID da preferência obtido
-                payer: {
-                    firstName: "",
-                    lastName: "",
-                    email: "",
-                },
+const renderPaymentBrick = async () => {
+    const settings = {
+        initialization: {
+            amount: valorPayment, // Obtém o valor do pagamento dinamicamente
+            preferenceId: $("#preference_id").val(), // Obtém o ID da preferência
+        },
+        customization: {
+            paymentMethods: {
+                ticket: "all",
+                bankTransfer: "all",
+                creditCard: "all",
+                debitCard: "all",
             },
-            customization: {
-                visual: { 
-                    style: { 
-                        customVariables: { 
-                            textPrimaryColor: "#6d1616",
-                            textSecondaryColor: "#6d1616",
-                            inputBackgroundColor: "#f7f7f7",
-                            formBackgroundColor: "#ffffff",
-                            baseColor: "#6d1616",
-                            baseColorFirstVariant: "#6d1616",
-                            baseColorSecondVariant: "#6d1616",
-                            errorColor: "#d9534f",
-                            successColor: "#5bc0de",
-                            outlinePrimaryColor: "#6d1616",
-                            outlineSecondaryColor: "#cccccc",
-                            buttonTextColor: "#ffffff",
-                            fontSizeExtraSmall: "12px",
-                            fontSizeSmall: "14px",
-                            fontSizeMedium: "16px",
-                            fontSizeLarge: "18px",
-                            fontSizeExtraLarge: "20px",
-                            fontWeightNormal: "400",
-                            fontWeightSemiBold: "600",
-                            formInputsTextTransform: "none",
-                            inputVerticalPadding: "10px",
-                            inputHorizontalPadding: "15px",
-                            inputFocusedBoxShadow: "0 0 0 0.2rem rgba(109, 22, 22, 0.5)",
-                            inputErrorFocusedBoxShadow: "0 0 0 0.2rem rgba(217, 83, 79, 0.5)",
-                            inputBorderWidth: "1px",
-                            inputFocusedBorderWidth: "2px",
-                            borderRadiusSmall: "4px",
-                            borderRadiusMedium: "8px",
-                            borderRadiusLarge: "12px",
-                            borderRadiusFull: "50px",
-                            formPadding: "20px"
-                        },
+            visual: { 
+                style: { 
+                    customVariables: { 
+                        textPrimaryColor: "#6d1616",
+                        textSecondaryColor: "#6d1616",
+                        inputBackgroundColor: "#f7f7f7",
+                        formBackgroundColor: "#ffffff",
+                        baseColor: "#6d1616",
+                        baseColorFirstVariant: "#6d1616",
+                        baseColorSecondVariant: "#6d1616",
+                        errorColor: "#d9534f",
+                        successColor: "#5bc0de",
+                        outlinePrimaryColor: "#6d1616",
+                        outlineSecondaryColor: "#cccccc",
+                        buttonTextColor: "#ffffff",
+                        fontSizeExtraSmall: "12px",
+                        fontSizeSmall: "14px",
+                        fontSizeMedium: "16px",
+                        fontSizeLarge: "18px",
+                        fontSizeExtraLarge: "20px",
+                        fontWeightNormal: "400",
+                        fontWeightSemiBold: "600",
+                        formInputsTextTransform: "none",
+                        inputVerticalPadding: "10px",
+                        inputHorizontalPadding: "15px",
+                        inputFocusedBoxShadow: "0 0 0 0.2rem rgba(109, 22, 22, 0.5)",
+                        inputErrorFocusedBoxShadow: "0 0 0 0.2rem rgba(217, 83, 79, 0.5)",
+                        inputBorderWidth: "1px",
+                        inputFocusedBorderWidth: "2px",
+                        borderRadiusSmall: "4px",
+                        borderRadiusMedium: "8px",
+                        borderRadiusLarge: "12px",
+                        borderRadiusFull: "50px",
+                        formPadding: "20px"
                     },
                 },
-                paymentMethods: {
-                    creditCard: "all",
-                    debitCard: "all",
-                    ticket: "all",
-                    bankTransfer: "all",
-                    maxInstallments: 1
-                },
             },
-            callbacks: {
-                onReady: () => {
-                    console.log("Payment Brick pronto.");
-                },
-                onSubmit: ({ selectedPaymentMethod, formData }) => {
-                    return new Promise((resolve, reject) => {
-                        fetch("/process_payment", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify(formData),
-                        })
-                            .then((response) => response.json())
-                            .then(() => resolve())
-                            .catch(() => reject());
-                    });
-                },
-                onError: (error) => {
-                    console.error(error);
-                },
+        },
+        callbacks: {
+            onReady: () => {
+                // Callback chamado quando o Brick estiver pronto.
             },
-        };
+            onSubmit: ({ selectedPaymentMethod, formData }) => {
+                console.log("Dados do formulário enviados:", formData); // Log para verificar o formData
 
-        window.paymentBrickController = await bricksBuilder.create(
-            "payment",
-            "paymentBrick_container",
-            settings
-        );
+                return new Promise((resolve, reject) => {
+                    fetch("http://localhost/api/api/evento.php?vl=" + valorPayment, { // Usa o valor dinâmico
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(formData),
+                    })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("Erro na resposta da API: " + response.statusText);
+                        }
+                        return response.json(); // Obtemos a resposta como JSON
+                    })
+                    .then((jsonResponse) => {
+                        console.log("Resposta da API:", jsonResponse);
+
+                        // Verifica se a transação foi aprovada
+                        if (jsonResponse.status === 'approved') {
+                            renderStatusScreenBrick(jsonResponse.id); // Passa o ID do pagamento para renderizar a tela de status
+                            resolve();
+                        } else if (jsonResponse.status === 'pending') {
+                            renderStatusScreenBrick(jsonResponse.id); // Passa o ID do pagamento para renderizar a tela de status
+                            resolve();
+                        } else if (jsonResponse.status === 'in_process') {
+                            renderStatusScreenBrick(jsonResponse.id); // Passa o ID do pagamento para renderizar a tela de status
+                            resolve();
+                        } else if (jsonResponse.status === 'rejected') {
+                            renderStatusScreenBrick(jsonResponse.id); // Passa o ID do pagamento para renderizar a tela de status
+                            resolve();
+                        } else {
+                            reject(new Error("Status desconhecido: " + jsonResponse.status));
+                        }
+
+                        // Verifica se o ID do pagamento foi retornado
+                        if (!jsonResponse.id) {
+                            throw new Error("ID do pagamento não foi retornado pela API.");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao tentar criar o pagamento:", error); // Log do erro
+                        alert("Ocorreu um erro ao processar o pagamento. Tente novamente."); // Alerta para o usuário
+                        reject(error); // Rejeita a Promise com o erro
+                    });
+                });
+            },
+            onError: (error) => {
+                console.error("Erro no pagamento:", error);
+            },
+        },
     };
 
-    // Renderizando o Payment Brick
-    renderPaymentBrick(bricksBuilder);
+    // Adiciona validação do valor de pagamento antes de renderizar
+    if (valorPayment < 1) { // Altere 1 para o valor mínimo necessário para o seu caso
+        alert("O valor da transação é muito baixo para os métodos de pagamento selecionados.");
+        return;
+    }
+
+    window.paymentBrickController = await bricksBuilder.create(
+        "payment",
+        "paymentBrick_container",
+        settings
+    );
+};
+
+const renderStatusScreenBrick = async (paymentId) => {
+    const settings = {
+        initialization: {
+            paymentId: paymentId, // Agora passamos o paymentId corretamente
+        },
+        callbacks: {
+            onReady: () => {
+                // Callback chamado quando o Brick estiver pronto.
+                // Oculta o Payment Brick
+                document.getElementById("paymentBrick_container").style.display = "none";
+            },
+            onError: (error) => {
+                console.error("Erro ao renderizar o Status Screen Brick:", error);
+            },
+        },
+    };
+
+    window.statusScreenBrickController = await bricksBuilder.create(
+        'statusScreen',
+        'statusScreenBrick_container',
+        settings
+    );
+};
+
+const handleRejectedPayment = (jsonResponse) => {
+    if (jsonResponse.status_detail === 'cc_rejected_high_risk') {
+        alert("Transação rejeitada devido ao alto risco. Tente um método de pagamento diferente.");
+    } else {
+        alert("Transação rejeitada: " + jsonResponse.status_detail);
+    }
+};
+
+// Chama o renderPaymentBrick
+renderPaymentBrick();
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

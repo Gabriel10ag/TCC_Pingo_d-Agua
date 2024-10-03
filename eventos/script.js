@@ -159,24 +159,27 @@ async function carregarEventos() {
 
 function criarCardDeEvento(evento, id) {
     const cardHtml = `
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="${evento.imagemUrl}" class="card-img-top" alt="${evento.titulo}">
-                <div class="card-body">
-                    <h5 class="card-title">${evento.titulo}</h5>
-                    <p class="card-text">${evento.descricao}</p>
-                    <p class="card-text"><small class="text-muted">${evento.data} às ${evento.hora}</small></p>
-                </div>
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="card-preco"><p class="card-text">Preço: R$ ${evento.preco.toFixed(2)}</p></h3>
-                    <input type="number" class="form-control quantidade-ingressos" min="1" value="1" style="width: 100;" data-preco="${evento.preco}">
-                </div>
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <p class="total-preco">Total: R$ ${evento.preco.toFixed(2)}</p>
-                    <button class="btn btn-success btn-comprar" data-id="${id}" data-preco="${evento.preco}">Comprar</button>
-                </div>
+    <form action="eventos.php" method="get">
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <img src="${evento.imagemUrl}" class="card-img-top" alt="${evento.titulo}">
+            <div class="card-body">
+                <h5 class="card-title">${evento.titulo}</h5>
+                <p class="card-text">${evento.descricao}</p>
+                <p class="card-text"><small class="text-muted">${evento.data} às ${evento.hora}</small></p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="card-preco"><p class="card-text">Preço: R$ ${evento.preco.toFixed(2)}</p></h3>
+                <input type="number" class="form-control quantidade-ingressos" min="1" value="1" style="width: 100;" data-preco="${evento.preco}">
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <p class="total-preco">Total: R$ ${evento.preco.toFixed(2)}</p>
+                <input type="hidden" name="vl" class="input-total-preco" value="${evento.preco.toFixed(2)}">
+                <button type="submit" class="btn btn-success btn-comprar" data-id="${id}" data-preco="${evento.preco}">Comprar</button>
             </div>
         </div>
+    </div>
+    </form>
     `;
     eventosContainer.insertAdjacentHTML('beforeend', cardHtml);
 
@@ -190,23 +193,28 @@ function criarCardDeEvento(evento, id) {
         const preco = parseFloat(this.getAttribute('data-preco'));
         const total = preco * quantidade;
         totalPrecoElement.textContent = `Total: R$ ${total.toFixed(2)}`;
+
+        // Atualiza o input hidden com o valor total
+        const totalInput = cardElement.querySelector('.input-total-preco');
+        totalInput.value = total.toFixed(2);
     });
 
     // Adiciona evento de clique ao botão "Comprar"
     const comprarButton = cardElement.querySelector('.btn-comprar');
-    comprarButton.addEventListener('click', function () {
+    comprarButton.addEventListener('click', function (e) {
+        e.preventDefault(); // Evita o envio do formulário
+
         const quantidade = parseInt(quantidadeInput.value, 10) || 1;
         const total = parseFloat(totalPrecoElement.textContent.replace('Total: R$ ', '').replace('.', '').replace(',', '.'));
-        // Redireciona com o total como parâmetro na URL
-        window.location.href = `${window.location.pathname}?vl=${total.toFixed(2)}`;
+
+        // Mostra o modal de pagamento
+        const pagamentoModal = new bootstrap.Modal(document.getElementById('pagamento-modal'));
+        pagamentoModal.show();
+        
+        // Se necessário, armazene o valor total em um campo oculto no modal
+        document.getElementById('valor_payment').value = total.toFixed(2);
     });
 }
-
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('btn-comprar')) {
-        abrirModalPagamento(e);
-    }
-});
 
 async function excluirEvento(eventId, imagemUrl) {
     try {
@@ -252,3 +260,25 @@ excluirEventosButton.addEventListener('click', async () => {
 });
 
 carregarEventos();
+
+// Adição do novo código para manipulação de eventos
+document.addEventListener('DOMContentLoaded', function() {
+    const eventosContainer = document.getElementById('eventos-container');
+
+    eventosContainer.addEventListener('input', function(e) {
+        if (e.target.classList.contains('quantidade-ingressos')) {
+            const card = e.target.closest('.card');
+            const quantidade = parseInt(e.target.value, 10) || 1;
+            const preco = parseFloat(e.target.getAttribute('data-preco'));
+            const total = preco * quantidade;
+
+            // Atualiza o total mostrado no card
+            const totalPrecoElement = card.querySelector('.total-preco');
+            totalPrecoElement.textContent = `Total: R$ ${total.toFixed(2)}`;
+
+            // Atualiza o input hidden com o valor total
+            const totalInput = card.querySelector('.input-total-preco');
+            totalInput.value = total.toFixed(2);
+        }
+    });
+});

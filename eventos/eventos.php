@@ -1,52 +1,56 @@
 <?php
-require_once 'api/preference.php'; // Inclua aqui o seu arquivo de configuração do Mercado Pago
+$config = require_once 'api/config.php';
+$accesstoken = $config['accesstoken'];
 
-$amount = (float)trim($_GET['vl']);
+// Verifica se o valor 'vl' foi passado na requisição GET
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['vl'])) {
+    $amount = (float)trim($_GET['vl']);
+    
+    // Não exiba o valor na tela
+    // echo "Valor passado para a API: $amount"; // Isso deve ser removido
 
-// Não exiba o valor na tela
-// echo "Valor passado para a API: $amount"; // Isso deve ser removido
+    $body = json_decode(file_get_contents("php://input")); // Obtém o body da requisição
 
-$body = json_decode(file_get_contents("php://input")); // Obtém o body da requisição
+    if (isset($body->token)) {
+        $curl = curl_init();
 
-if (isset($body->token)) {
-    $curl = curl_init();
+        $idempotency_key = uniqid(); // Gera uma chave única para idempotência
 
-    $idempotency_key = uniqid(); // Gera uma chave única para idempotência
-
-    // Configuração da requisição cURL para a API do Mercado Pago
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.mercadopago.com/v1/payments',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => json_encode([
-            'payer' => [
-                'email' => $body->payer->email,
-                'identification' => [
-                    'type' => $body->payer->identification->type,
-                    'number' => $body->payer->identification->number,
+        // Configuração da requisição cURL para a API do Mercado Pago
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.mercadopago.com/v1/payments',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode([
+                'payer' => [
+                    'email' => $body->payer->email,
+                    'identification' => [
+                        'type' => $body->payer->identification->type,
+                        'number' => $body->payer->identification->number,
+                    ],
                 ],
-            ],
-            'issuer_id' => $body->issuer_id,
-            'description' => $body->description ?? 'Descrição não disponível', // Garante que a descrição esteja definida
-            'installments' => $body->installments,
-            'payment_method_id' => $body->payment_method_id,
-            'token' => $body->token,
-            'transaction_amount' => $body->transaction_amount,
-        ]),
-        CURLOPT_HTTPHEADER => array(
-            'Content-Type: application/json',
-            'X-Idempotency-Key: ' . $idempotency_key,
-            'Authorization: Bearer ' . $accesstoken // Token de acesso da sua aplicação
-        ),
-    ));
+                'issuer_id' => $body->issuer_id,
+                'description' => $body->description ?? 'Descrição não disponível', // Garante que a descrição esteja definida
+                'installments' => $body->installments,
+                'payment_method_id' => $body->payment_method_id,
+                'token' => $body->token,
+                'transaction_amount' => $amount, // Use o valor capturado
+            ]),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'X-Idempotency-Key: ' . $idempotency_key,
+                'Authorization: Bearer ' . $accesstoken // Token de acesso da sua aplicação
+            ),
+        ));
 
-    $response = curl_exec($curl);
-    curl_close($curl);
+        $response = curl_exec($curl);
+        curl_close($curl);
 
-    // Certifique-se de que o retorno é um JSON válido
-    header('Content-Type: application/json');
-    echo $response; // Retorna o JSON da API Mercado Pago
-    exit; // Encerra o script após a resposta JSON
+        // Certifique-se de que o retorno é um JSON válido
+        header('Content-Type: application/json');
+        echo $response; // Retorna o JSON da API Mercado Pago
+        exit; // Encerra o script após a resposta JSON
+    }
 }
 ?>
 
@@ -227,6 +231,7 @@ if (isset($body->token)) {
             </div>
         </div>
     </div>
+    
 
     <main class="container mt-4">
         <h1 class="text">Proximos Eventos</h1>
@@ -291,10 +296,10 @@ const renderPaymentBrick = async () => {
         },
         customization: {
             paymentMethods: {
-                ticket: "all",
+                
                 bankTransfer: "all",
                 creditCard: "all",
-                debitCard: "all",
+                
             },
             visual: { 
                 style: { 
@@ -339,22 +344,24 @@ const renderPaymentBrick = async () => {
                 // Callback chamado quando o Brick estiver pronto.
             },
             onSubmit: ({ selectedPaymentMethod, formData }) => {
-                console.log("Dados do formulário enviados:", formData); // Log para verificar o formData
+    console.log("Dados do formulário enviados:", formData); // Log para verificar o formData
 
-                return new Promise((resolve, reject) => {
-                    fetch("http://localhost/api/api/evento.php?vl=" + valorPayment, { // Usa o valor dinâmico
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(formData),
-                    })
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error("Erro na resposta da API: " + response.statusText);
-                        }
-                        return response.json(); // Obtemos a resposta como JSON
-                    })
+    return new Promise((resolve, reject) => {
+        fetch("http://localhost/tcc_pingo_d-agua/eventos/evento.php?vl=" + valorPayment, { // Usa o valor dinâmico
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Erro na resposta da API: " + response.statusText);
+            }
+            return response.json(); // Obtemos a resposta como JSON
+        })
+
+
                     .then((jsonResponse) => {
                         console.log("Resposta da API:", jsonResponse);
 
@@ -394,7 +401,7 @@ const renderPaymentBrick = async () => {
     };
 
     // Adiciona validação do valor de pagamento antes de renderizar
-    if (valorPayment < 1) { // Altere 1 para o valor mínimo necessário para o seu caso
+    if (valorPayment < 0) { // Altere 1 para o valor mínimo necessário para o seu caso
         alert("O valor da transação é muito baixo para os métodos de pagamento selecionados.");
         return;
     }

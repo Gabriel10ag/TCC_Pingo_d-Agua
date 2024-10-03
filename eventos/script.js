@@ -84,7 +84,7 @@ onAuthStateChanged(auth, async (user) => {
         if (userDocSnap.exists()) {
             const userData = userDocSnap.data();
             document.getElementById('email').value = user.email;
-            
+
             if (userData.isAdmin) {
                 document.getElementById('admin-menu').style.display = 'block';
             }
@@ -159,7 +159,6 @@ async function carregarEventos() {
 
 function criarCardDeEvento(evento, id) {
     const cardHtml = `
-    <form action="eventos.php" method="get">
     <div class="col-md-4 mb-4">
         <div class="card">
             <img src="${evento.imagemUrl}" class="card-img-top" alt="${evento.titulo}">
@@ -172,21 +171,26 @@ function criarCardDeEvento(evento, id) {
                 <h3 class="card-preco"><p class="card-text">Preço: R$ ${evento.preco.toFixed(2)}</p></h3>
                 <input type="number" class="form-control quantidade-ingressos" min="1" value="1" style="width: 100;" data-preco="${evento.preco}">
             </div>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <p class="total-preco">Total: R$ ${evento.preco.toFixed(2)}</p>
-                <input type="hidden" name="vl" class="input-total-preco" value="${evento.preco.toFixed(2)}">
-                <button type="submit" class="btn btn-success btn-comprar" data-id="${id}" data-preco="${evento.preco}">Comprar</button>
-            </div>
+            <form action="eventos.php" method="get">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <p class="total-preco">Total: R$ ${evento.preco.toFixed(2)}</p>
+                    <input type="hidden" name="vl" class="input-total-preco" value="${evento.preco.toFixed(2)}">
+                    <input type="hidden" name="eventId" value="${id}">
+                    <input type="hidden" name="quantidade" class="input-quantidade" value="1">
+                    <button type="submit" class="btn btn-success btn-comprar">Comprar</button>
+                </div>
+            </form>
         </div>
     </div>
-    </form>
     `;
     eventosContainer.insertAdjacentHTML('beforeend', cardHtml);
 
-    // Adiciona o evento para atualizar o preço total quando a quantidade muda
+    // Adiciona o evento para atualizar o preço total e a quantidade
     const cardElement = eventosContainer.lastElementChild;
     const quantidadeInput = cardElement.querySelector('.quantidade-ingressos');
     const totalPrecoElement = cardElement.querySelector('.total-preco');
+    const totalInput = cardElement.querySelector('.input-total-preco');
+    const quantidadeHiddenInput = cardElement.querySelector('.input-quantidade');
 
     quantidadeInput.addEventListener('input', function () {
         const quantidade = parseInt(this.value, 10) || 1;
@@ -194,25 +198,9 @@ function criarCardDeEvento(evento, id) {
         const total = preco * quantidade;
         totalPrecoElement.textContent = `Total: R$ ${total.toFixed(2)}`;
 
-        // Atualiza o input hidden com o valor total
-        const totalInput = cardElement.querySelector('.input-total-preco');
+        // Atualiza os inputs ocultos com o valor total e a quantidade
         totalInput.value = total.toFixed(2);
-    });
-
-    // Adiciona evento de clique ao botão "Comprar"
-    const comprarButton = cardElement.querySelector('.btn-comprar');
-    comprarButton.addEventListener('click', function (e) {
-        e.preventDefault(); // Evita o envio do formulário
-
-        const quantidade = parseInt(quantidadeInput.value, 10) || 1;
-        const total = parseFloat(totalPrecoElement.textContent.replace('Total: R$ ', '').replace('.', '').replace(',', '.'));
-
-        // Mostra o modal de pagamento
-        const pagamentoModal = new bootstrap.Modal(document.getElementById('pagamento-modal'));
-        pagamentoModal.show();
-        
-        // Se necessário, armazene o valor total em um campo oculto no modal
-        document.getElementById('valor_payment').value = total.toFixed(2);
+        quantidadeHiddenInput.value = quantidade;
     });
 }
 
@@ -276,9 +264,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const totalPrecoElement = card.querySelector('.total-preco');
             totalPrecoElement.textContent = `Total: R$ ${total.toFixed(2)}`;
 
-            // Atualiza o input hidden com o valor total
+            // Atualiza os inputs ocultos com o valor total e a quantidade
             const totalInput = card.querySelector('.input-total-preco');
             totalInput.value = total.toFixed(2);
+            const quantidadeHiddenInput = card.querySelector('.input-quantidade');
+            quantidadeHiddenInput.value = quantidade;
         }
     });
 });

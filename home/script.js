@@ -37,7 +37,7 @@
         logo.style.height = '100px';
     }
 });
-import { db } from './firebase-config.js'; // Certifique-se de que o caminho está correto
+import { db } from './firebase-config.js';
 import { collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 
 document.getElementById('show-events').addEventListener('click', async () => {
@@ -52,19 +52,19 @@ document.getElementById('show-events').addEventListener('click', async () => {
     // Obter a data atual
     const today = new Date();
     
-    // Obter o primeiro e o último dia da semana (domingo e sábado)
-    const firstDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay())); // Domingo
-    const lastDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 6)); // Sábado
+    // Obter o primeiro e o último dia do mês
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0); // Último dia do mês
 
     // Formatar as datas no formato yyyy-mm-dd
-    const yyyyFirst = firstDayOfWeek.getFullYear();
-    const mmFirst = String(firstDayOfWeek.getMonth() + 1).padStart(2, '0');
-    const ddFirst = String(firstDayOfWeek.getDate()).padStart(2, '0');
+    const yyyyFirst = firstDayOfMonth.getFullYear();
+    const mmFirst = String(firstDayOfMonth.getMonth() + 1).padStart(2, '0');
+    const ddFirst = String(firstDayOfMonth.getDate()).padStart(2, '0');
     const startDate = `${yyyyFirst}-${mmFirst}-${ddFirst}`;
     
-    const yyyyLast = lastDayOfWeek.getFullYear();
-    const mmLast = String(lastDayOfWeek.getMonth() + 1).padStart(2, '0');
-    const ddLast = String(lastDayOfWeek.getDate()).padStart(2, '0');
+    const yyyyLast = lastDayOfMonth.getFullYear();
+    const mmLast = String(lastDayOfMonth.getMonth() + 1).padStart(2, '0');
+    const ddLast = String(lastDayOfMonth.getDate()).padStart(2, '0');
     const endDate = `${yyyyLast}-${mmLast}-${ddLast}`;
 
     // Verificar se o db foi corretamente inicializado
@@ -73,7 +73,7 @@ document.getElementById('show-events').addEventListener('click', async () => {
         return;
     }
 
-    // Consultar a coleção "eventos" no Firestore para eventos da semana
+    // Consultar a coleção "eventos" no Firestore para eventos do mês
     try {
         const eventosRef = collection(db, 'eventos');
         const q = query(eventosRef, where('data', '>=', startDate), where('data', '<=', endDate));
@@ -81,28 +81,32 @@ document.getElementById('show-events').addEventListener('click', async () => {
         // Executar a consulta e mostrar os resultados
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            eventsListDiv.innerHTML = '<p>Nenhum evento encontrado para esta semana.</p>';
+            eventsListDiv.innerHTML = '<p>Nenhum evento encontrado para este mês.</p>';
         } else {
             querySnapshot.forEach(doc => {
                 const eventData = doc.data();
                 rowDiv.innerHTML += `
                     <div class="col-md-4 mb-4">
-                        <div class="card h-100"> <!-- Adiciona classe para altura completa -->
-                            <img class="card-img-top" src="${eventData.imagemUrl || ''}" alt="Imagem do evento" style="height: 200px; object-fit: cover;">
+                        <div class="card h-100 shadow-lg rounded" style="border: 1px solid #ddd;"> <!-- Adiciona borda e sombra -->
+                            <img class="card-img-top rounded-top" src="${eventData.imagemUrl || 'default-image.jpg'}" alt="Imagem do evento" style="height: 250px; object-fit: cover;">
                             <div class="card-body d-flex flex-column">
-                                <h3 class="card-title">${eventData.titulo || 'Título não disponível'}</h3>
-                                <p class="card-text">${eventData.descricao || 'Descrição não disponível'}</p>
+                                <h3 class="card-title text-primary font-weight-bold">${eventData.titulo || 'Título não disponível'}</h3>
+                                <p class="card-text text-muted mb-4">${eventData.descricao || 'Descrição não disponível'}</p>
                                 <ul class="list-unstyled mt-auto">
-                                    <li>Data: ${eventData.data || 'Data não disponível'}</li>
-                                    <li>Hora: ${eventData.hora || 'Hora não disponível'}</li>
-                                    <li>Preço: R$${eventData.preco || 'Preço não disponível'}</li>
+                                    <li><strong>Data:</strong> ${eventData.data || 'Data não disponível'}</li>
+                                    <li><strong>Hora:</strong> ${eventData.hora || 'Hora não disponível'}</li>
+                                    <li><strong>Preço:</strong> <span class="text-success">R$${eventData.preco || 'Preço não disponível'}</span></li>
                                 </ul>
+                            </div>
+                            <div class="card-footer text-center bg-light">
+                                <button class="btn btn-primary btn-block">Saiba Mais</button>
                             </div>
                         </div>
                     </div>
                 `;
             });
         }
+        
     } catch (error) {
         console.error("Erro ao buscar eventos: ", error);
         eventsListDiv.innerHTML = '<p>Erro ao carregar os eventos.</p>';

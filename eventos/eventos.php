@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['vl'])) {
         <nav>
             <a href="../estrutura/estrutura.html" class="menu-button">Estrutura</a>
             <a href="../historia/historia.html" class="menu-button">História</a>
-            <a href="../eventos/eventos.html" class="menu-button">Eventos</a>
+            <a href="../eventos/eventos.php" class="menu-button">Eventos</a>
             <a href="../orcamento/orcamento.html" class="menu-button">Orçamento</a>
             <div id="login-menu">
                 <a id="login-button" href="../login/login.html" class="menu-button">Login</a>

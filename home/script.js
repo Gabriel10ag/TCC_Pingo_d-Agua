@@ -112,3 +112,41 @@ document.getElementById('show-events').addEventListener('click', async () => {
         eventsListDiv.innerHTML = '<p>Erro ao carregar os eventos.</p>';
     }
 });
+
+
+
+const images = document.querySelectorAll('.gallery-item');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const prevButton = document.getElementById('prev');
+const nextButton = document.getElementById('next');
+
+let currentIndex = 0;
+
+images.forEach((img, index) => {
+    img.addEventListener('click', () => {
+        currentIndex = index;
+        openLightbox(img.src);
+    });
+});
+
+function openLightbox(src) {
+    lightboxImg.src = src;
+    lightbox.style.display = 'flex';
+}
+
+prevButton.addEventListener('click', (event) => {
+    event.stopPropagation(); // Impede o fechamento do lightbox
+    currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+    lightboxImg.src = images[currentIndex].src;
+});
+
+nextButton.addEventListener('click', (event) => {
+    event.stopPropagation(); // Impede o fechamento do lightbox
+    currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+    lightboxImg.src = images[currentIndex].src;
+});
+
+lightbox.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+});

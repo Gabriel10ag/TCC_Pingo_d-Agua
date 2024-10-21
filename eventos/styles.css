@@ -17,6 +17,14 @@ body {
     flex-direction: column;
     height: 100vh;
 }
+.tam {
+    height: 80vh;
+}
+.ps{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
 
 /* Estiliza o container principal que envolve o conteúdo e o rodapé */
 #main-content {

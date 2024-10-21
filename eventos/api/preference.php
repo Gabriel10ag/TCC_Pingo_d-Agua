@@ -1,23 +1,18 @@
 <?php
-$config = require_once 'config.php';
+$config = require_once '../config.php';
 $accesstoken = $config['accesstoken'];
 $body = json_decode(file_get_contents("php://input"));
 
 // Verifica se o token está presente
 if (!isset($body->token)) {
     // Verifica se 'vl' foi passado na requisição
-    // Verifica se o botão "Comprar" foi clicado, ou seja, se há uma requisição GET
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['vl'])) {
+    if (!isset($_GET['vl'])) {
+        die('O valor (vl) não existe.');
+    } else {
         // Valida se 'vl' é numérico e maior que 0
         if ($_GET['vl'] === "" || !is_numeric($_GET['vl']) || $_GET['vl'] < 1) {
             die('O valor (vl) deve ser um número e não pode ser menor que 1.');
-        } else {
-            // Lógica a ser executada se 'vl' for válido
-            echo "Valor válido: " . $_GET['vl'];
         }
-    } else {
-        // Se 'vl' não foi enviado ou não é uma requisição GET após clicar no botão
-        die('O valor (vl) não existe.');
     }
 
     // Captura e valida o valor
@@ -40,7 +35,7 @@ if (!isset($body->token)) {
         CURLOPT_POSTFIELDS => json_encode([
             "items" => [
                 [
-                    "id" => "1",
+                    "id" => "Sound system",
                     "title" => "Dummy Title",
                     "description" => "Dummy description",
                     "picture_url" => "http://www.myapp.com/myimage.jpg",
@@ -80,7 +75,7 @@ if (!isset($body->token)) {
         // Exibe o link de pagamento
         if (isset($obj->init_point)) {
             $init_point = $obj->init_point;
-            echo "<a href='$init_point'>Pagar agora</a>";
+
         } else {
             echo "Erro ao gerar o link de pagamento.";
         }

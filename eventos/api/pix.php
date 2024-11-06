@@ -1,4 +1,11 @@
 <link rel="stylesheet" href="pix.css">
+<style>
+  .link{
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+}
+</style>
 
 <?php
 
@@ -73,7 +80,7 @@ if (isset($obj->id) && $obj->id != null) {
     <h3>Valor: R$ {$transaction_amount}</h3>
     <img src='data:image/png;base64, {$img_qrcode}' class='pix  ' width = '200' /> <br/>
     <textarea>{$copia_cola}</textarea>
-    <a href='{$link_externo}'>link externo</a>  
+    <a href='{$link_externo}' class='link'>link externo</a>  
     </div>";
 
     // Verificar o status do pagamento

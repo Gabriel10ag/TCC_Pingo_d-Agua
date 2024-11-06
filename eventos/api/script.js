@@ -9,16 +9,12 @@ const renderPaymentBrick = async () => {
             preferenceId: $("#preference_id").val(), // Obtém o ID da preferência
         },
         customization: {
-                    paymentMethods: {
-                        ticket: false,
-                        bankTransfer: false,
-                        creditCard: "all",
-                        debitCard: false,
-                        mercadoPago: false,
-                    },
-            visual: { 
-                style: { 
-                    customVariables: { 
+            paymentMethods: {
+                creditCard: "all",
+            },
+            visual: {
+                style: {
+                    customVariables: {
                         textPrimaryColor: "#6d1616",
                         textSecondaryColor: "#6d1616",
                         inputBackgroundColor: "#f7f7f7",
@@ -62,7 +58,7 @@ const renderPaymentBrick = async () => {
                 console.log("Dados do formulário enviados:", formData); // Log para verificar o formData
 
                 return new Promise((resolve, reject) => {
-                    fetch("http://localhost/tcc_pingo_d-agua/eventos/api/card.php?vl=" + valorPayment, { // Usa o valor dinâmico
+                    fetch("http://localhost/tcc_pingo_d-agua/eventos/api/card.php?vl=" + valorPayment, { 
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -73,22 +69,13 @@ const renderPaymentBrick = async () => {
                         if (!response.ok) {
                             throw new Error("Erro na resposta da API: " + response.statusText);
                         }
-                        return response.json(); // Obtemos a resposta como JSON
+                        return response.json(); // Tenta converter a resposta para JSON
                     })
                     .then((jsonResponse) => {
                         console.log("Resposta da API:", jsonResponse);
 
                         // Verifica se a transação foi aprovada
-                        if (jsonResponse.status === 'approved') {
-                            renderStatusScreenBrick(jsonResponse.id); // Passa o ID do pagamento para renderizar a tela de status
-                            resolve();
-                        } else if (jsonResponse.status === 'pending') {
-                            renderStatusScreenBrick(jsonResponse.id); // Passa o ID do pagamento para renderizar a tela de status
-                            resolve();
-                        } else if (jsonResponse.status === 'in_process') {
-                            renderStatusScreenBrick(jsonResponse.id); // Passa o ID do pagamento para renderizar a tela de status
-                            resolve();
-                        } else if (jsonResponse.status === 'rejected') {
+                        if (jsonResponse.status === 'approved' || jsonResponse.status === 'pending' || jsonResponse.status === 'in_process' || jsonResponse.status === 'rejected') {
                             renderStatusScreenBrick(jsonResponse.id); // Passa o ID do pagamento para renderizar a tela de status
                             resolve();
                         } else {
@@ -129,11 +116,10 @@ const renderPaymentBrick = async () => {
 const renderStatusScreenBrick = async (paymentId) => {
     const settings = {
         initialization: {
-            paymentId: paymentId, // Agora passamos o paymentId corretamente
+            paymentId: paymentId, // Passa o ID do pagamento para o Status Brick
         },
         callbacks: {
             onReady: () => {
-                // Callback chamado quando o Brick estiver pronto.
                 // Oculta o Payment Brick
                 document.getElementById("paymentBrick_container").style.display = "none";
             },
@@ -150,14 +136,5 @@ const renderStatusScreenBrick = async (paymentId) => {
     );
 };
 
-const handleRejectedPayment = (jsonResponse) => {
-    if (jsonResponse.status_detail === 'cc_rejected_high_risk') {
-        alert("Transação rejeitada devido ao alto risco. Tente um método de pagamento diferente.");
-    } else {
-        alert("Transação rejeitada: " + jsonResponse.status_detail);
-    }
-};
-
 // Chama o renderPaymentBrick
 renderPaymentBrick();
-

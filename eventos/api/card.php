@@ -1,14 +1,12 @@
-<link rel="stylesheet" href="pix.css">
-
 <?php
 require_once 'preference.php'; // Inclua aqui o seu arquivo de configuração do Mercado Pago
 
-$amount = (float)trim($_GET['vl']);
+$amount = (float)trim($_GET['vl']); // Obtém o valor do pagamento da URL
 
-// Não exiba o valor na tela
-// echo "Valor passado para a API: $amount"; // Isso deve ser removido
+// Não exiba o valor na tela, pois é uma boa prática em produção
+// echo "Valor passado para a API: $amount"; 
 
-$body = json_decode(file_get_contents("php://input")); // Obtém o body da requisição
+$body = json_decode(file_get_contents("php://input")); // Obtém o corpo da requisição
 
 if (isset($body->token)) {
     $curl = curl_init();
@@ -43,14 +41,32 @@ if (isset($body->token)) {
     ));
 
     $response = curl_exec($curl);
+
+    // Verifica se houve erro na requisição cURL
+    if ($response === false) {
+        $error_message = curl_error($curl);
+        curl_close($curl);
+        echo json_encode(["error" => "Erro na requisição cURL", "message" => $error_message]);
+        exit;
+    }
+
     curl_close($curl);
 
-    // Certifique-se de que o retorno é um JSON válido
+    // Verifica se a resposta da API do Mercado Pago é válida
+    $responseData = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        echo json_encode(["error" => "Erro ao decodificar JSON da resposta", "message" => json_last_error_msg()]);
+        exit;
+    }
+
+    // Retorna a resposta da API Mercado Pago como JSON
     header('Content-Type: application/json');
-    echo $response; // Retorna o JSON da API Mercado Pago
-    exit; // Encerra o script após a resposta JSON
+    echo json_encode($responseData); // Retorna a resposta da API
+    exit; // Encerra o script após a resposta
 }
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -60,7 +76,7 @@ if (isset($body->token)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cartão</title>
     <script src="https://sdk.mercadopago.com/js/v2"></script>
-    <link rel="stylesheet" href="card.css">
+    <link rel="stylesheet" href="pix.css">
 </head>
 <body>
     <input type="hidden" id="valor_payment" value="<?= $amount; ?>">

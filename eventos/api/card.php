@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="pix.css">
+
 <?php
 require_once 'preference.php'; // Inclua aqui o seu arquivo de configuração do Mercado Pago
 

@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="pix.css">
+
 <?php
 
 if (!isset($_GET['vl'])) {
@@ -16,7 +18,7 @@ $config = require_once '../config.php';
 $accesstoken = $config['accesstoken'];
 // Verifique se o valor capturado está correto
 $amount = (float)trim($_GET['vl']);
-echo "Valor passado para a API: $amount"; // Isso deve exibir o valor correto (ex: 80)
+
 
 $curl = curl_init();
 
@@ -65,10 +67,14 @@ if (isset($obj->id) && $obj->id != null) {
     $link_externo = $obj->point_of_interaction->transaction_data->ticket_url;
     $transaction_amount = $obj->transaction_amount;
 
-    echo "<h3>Valor: R$ {$transaction_amount}</h3>";
-    echo "<img src='data:image/png;base64, {$img_qrcode}' width = '200' /> <br/>";
-    echo "<textarea>{$copia_cola}</textarea>";
-    echo "<a href='{$link_externo}'>link externo</a>";
+    echo "<div class='modal'>
+  <img src='../../img/pix-106.png' class='logo' >
+    <h1 class='titulo'> Pague o QR code e obtenha seu ingresso </h1>
+    <h3>Valor: R$ {$transaction_amount}</h3>
+    <img src='data:image/png;base64, {$img_qrcode}' class='pix  ' width = '200' /> <br/>
+    <textarea>{$copia_cola}</textarea>
+    <a href='{$link_externo}'>link externo</a>  
+    </div>";
 
     // Verificar o status do pagamento
     $payment_id = $obj->id;
@@ -89,10 +95,10 @@ if (isset($obj->id) && $obj->id != null) {
     $payment_info = json_decode($response_status);
 
     if (isset($payment_info->status)) {
-        echo "<h3>Status do pagamento: {$payment_info->status}</h3>";
+        // echo "<h3>Status do pagamento: {$payment_info->status}</h3>";
     }
 } else {
     echo "<h3>Erro ao processar o pagamento.</h3>";
 }
 
-echo ($obj);
+

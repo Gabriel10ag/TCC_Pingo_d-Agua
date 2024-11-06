@@ -9,13 +9,13 @@ const renderPaymentBrick = async () => {
             preferenceId: $("#preference_id").val(), // Obtém o ID da preferência
         },
         customization: {
-            paymentMethods: {
-                ticket: "all",
-                bankTransfer: "all",
-                creditCard: "all",
-                debitCard: "all",
-                mercadoPago: "all",
-            },
+                    paymentMethods: {
+                        ticket: false,
+                        bankTransfer: false,
+                        creditCard: "all",
+                        debitCard: false,
+                        mercadoPago: false,
+                    },
             visual: { 
                 style: { 
                     customVariables: { 
@@ -62,7 +62,7 @@ const renderPaymentBrick = async () => {
                 console.log("Dados do formulário enviados:", formData); // Log para verificar o formData
 
                 return new Promise((resolve, reject) => {
-                    fetch("http://localhost/api/api/card.php?vl=" + valorPayment, { // Usa o valor dinâmico
+                    fetch("http://localhost/tcc_pingo_d-agua/eventos/api/card.php?vl=" + valorPayment, { // Usa o valor dinâmico
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -160,3 +160,4 @@ const handleRejectedPayment = (jsonResponse) => {
 
 // Chama o renderPaymentBrick
 renderPaymentBrick();
+

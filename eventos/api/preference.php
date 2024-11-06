@@ -17,7 +17,7 @@ if (!isset($body->token)) {
 
     // Captura e valida o valor
     $amount = (float)trim($_GET['vl']);
-    echo "Valor passado para a API: $amount"; // Debug: Mostra o valor
+ 
 
     // Inicia o cURL para criar a preferência
     $curl = curl_init();

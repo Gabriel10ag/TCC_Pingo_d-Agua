@@ -1,19 +1,3 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
-import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
-import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
-
-const firebaseConfig = {
-    apiKey: "AIzaSyDjbdj0Q2GLbTQZK4Qw-I2PZh2Foa0ObPI",
-    authDomain: "fazendapingod-agua.firebaseapp.com",
-    projectId: "fazendapingod-agua",
-    storageBucket: "fazendapingod-agua.appspot.com",
-    messagingSenderId: "273265835920",
-    appId: "1:273265835920:web:4e7e5f50b13c44b4817d15"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
 
 const userMenu = document.getElementById('user-menu');
 const loginMenu = document.getElementById('login-menu');

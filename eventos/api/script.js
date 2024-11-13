@@ -58,40 +58,46 @@ const renderPaymentBrick = async () => {
                 console.log("Dados do formulário enviados:", formData); // Log para verificar o formData
 
                 return new Promise((resolve, reject) => {
-                    fetch("http://localhost/tcc_pingo_d-agua/eventos/api/card.php?vl=" + valorPayment, { 
+                    fetch("http://localhost/tcc_pingo_d-agua/eventos/api/card.php?vl=" + valorPayment, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify(formData),
                     })
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error("Erro na resposta da API: " + response.statusText);
-                        }
-                        return response.json(); // Tenta converter a resposta para JSON
-                    })
-                    .then((jsonResponse) => {
-                        console.log("Resposta da API:", jsonResponse);
+                        .then((response) => {
+                            if (!response.ok) {
+                                throw new Error("Erro na resposta da API: " + response.statusText);
+                            }
+                            return response.json(); // Tenta converter a resposta para JSON
+                        })
+                        .then((jsonResponse) => {
+                            console.log("Resposta da API:", jsonResponse);
 
-                        // Verifica se a transação foi aprovada
-                        if (jsonResponse.status === 'approved' || jsonResponse.status === 'pending' || jsonResponse.status === 'in_process' || jsonResponse.status === 'rejected') {
-                            renderStatusScreenBrick(jsonResponse.id); // Passa o ID do pagamento para renderizar a tela de status
-                            resolve();
-                        } else {
-                            reject(new Error("Status desconhecido: " + jsonResponse.status));
-                        }
+                            // Verifica se a transação foi aprovada
+                            if (jsonResponse.status === 'approved') {
+                                renderStatusScreenBrick(jsonResponse.id);
+                                // Aguarda 10 segundos antes de redirecionar para a página desejada
+                                setTimeout(() => {
+                                    window.location.href = "../eventos.html"; // Redireciona para eventos.html após 10 segundos
+                                }, 10000); // 10000 milissegundos = 10 segundos
+                            } else if (jsonResponse.status === 'pending' || jsonResponse.status === 'in_process' || jsonResponse.status === 'rejected') {
+                                renderStatusScreenBrick(jsonResponse.id); // Passa o ID do pagamento para renderizar a tela de status
+                                resolve();
+                            } else {
+                                reject(new Error("Status desconhecido: " + jsonResponse.status));
+                            }
 
-                        // Verifica se o ID do pagamento foi retornado
-                        if (!jsonResponse.id) {
-                            throw new Error("ID do pagamento não foi retornado pela API.");
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Erro ao tentar criar o pagamento:", error); // Log do erro
-                        alert("Ocorreu um erro ao processar o pagamento. Tente novamente."); // Alerta para o usuário
-                        reject(error); // Rejeita a Promise com o erro
-                    });
+                            // Verifica se o ID do pagamento foi retornado
+                            if (!jsonResponse.id) {
+                                throw new Error("ID do pagamento não foi retornado pela API.");
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Erro ao tentar criar o pagamento:", error); // Log do erro
+                            alert("Ocorreu um erro ao processar o pagamento. Tente novamente."); // Alerta para o usuário
+                            reject(error); // Rejeita a Promise com o erro
+                        });
                 });
             },
             onError: (error) => {

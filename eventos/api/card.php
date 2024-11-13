@@ -76,7 +76,7 @@ if (isset($body->token)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cartão</title>
     <script src="https://sdk.mercadopago.com/js/v2"></script>
-    <link rel="stylesheet" href="pix.css">
+    <link rel="stylesheet" href="card.css">
 </head>
 <body>
     <input type="hidden" id="valor_payment" value="<?= $amount; ?>">

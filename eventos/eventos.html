@@ -69,10 +69,7 @@
                             <label for="preco" class="form-label">Preço</label>
                             <input type="number" class="form-control" id="preco" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="id" class="form-label">ID</label>
-                            <input type="number" class="form-control" id="id" required>
-                        </div>
+                        
                         <button type="submit" class="btn btn-primary">Inserir Evento</button>
                     </form>
                 </div>
@@ -94,7 +91,7 @@
                             <h5>Administração</h5>
                             <div class="botoes">
                                 <a href="#" class="botao">Inserir Eventos</a>
-                                <a href="#" class="botao">Excluir Eventos</a>
+                                <a href="#" class="botao" id="excluir">Excluir Eventos</a>
                             </div>
                         </div>
                     </form>
@@ -124,22 +121,33 @@
         </div>
     </div>
 
-<!-- Modal de Pagamento -->
+<!-- Payment Modal -->
 <div class="modal fade" id="pagamento-modal" tabindex="-1" aria-labelledby="pagamentoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content tam">
+        <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="pagamentoModalLabel">Pagamento</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body ps">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="quantidade">Quantidade de ingressos</label>
+                    <input type="number" id="quantidade" class="form-control" min="1" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="total">Total</label>
+                    <input type="text" id="total" class="form-control" readonly>
+                </div>
                 <p>Valor Total: <span id="valor-total-pagamento">R$ 0,00</span></p>
-                <input type="hidden" id="valor"> <!-- Campo para armazenar o valor -->
+            </div>
+            <input type="hidden" id="valor"> <!-- Campo para armazenar o valor -->
                 <div class="d-grid gap-2">
                     <button type="button" class="btn btn-secondary" id="btn-pix" data-link="api/pix.php">Pagar por Pix</button>
                     <button type="button" class="btn btn-secondary" id="btn-cartao" data-link="api/card.php">Pagar com Cartão</button>
                 
                 </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
@@ -149,8 +157,10 @@
 
 
 
+
     <!-- Modal para excluir eventos -->
-    <div class="modal fade" id="excluir-evento-modal" tabindex="-1" aria-labelledby="excluirEventoLabel" aria-hidden="true">
+    <div class="modal fade" id="excluir-evento-modal" tabindex="-1" aria-labelledby="excluirEventoLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -168,6 +178,7 @@
             </div>
         </div>
     </div>
+
 
     <main class="container mt-4">
         <h1 class="text">Proximos Eventos</h1>
@@ -209,128 +220,6 @@
 
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-
-<!-- <script type="module">
-   const mp = new MercadoPago('TEST-40402515-dc10-4df4-a0a1-36279f278b92', { locale: 'pt-BR' }); // Public Key de Teste
-const bricksBuilder = mp.bricks();
-
-const obterPreferenceId = async () => {
-    try {
-        const response = await fetch('/tcc_pingo_d-agua/eventos/api/preference.php');
-        const data = await response.json();
-        return data.preferenceId;
-    } catch (error) {
-        console.error("Erro ao obter preferenceId:", error);
-        throw new Error("Erro ao obter preferenceId.");
-    }
-};
-
-
-// Função para renderizar o Payment Brick
-const renderPaymentBrick = async () => {
-    const preferenceId = await obterPreferenceId();
-
-    if (!preferenceId) {
-        alert('Erro ao obter o preferenceId.');
-        return;
-    }
-
-    const valorPayment = parseFloat(document.getElementById('valor_payment').value);
-
-    const settings = {
-        initialization: {
-            preferenceId // Passa o ID da preferência recebido do backend
-        },
-        customization: {
-            paymentMethods: {
-                bankTransfer: 'all',
-                creditCard: 'all',
-            },
-            visual: {
-                style: {
-                    customVariables: {
-                        textPrimaryColor: '#6d1616',
-                        textSecondaryColor: '#6d1616',
-                        inputBackgroundColor: '#f7f7f7',
-                        formBackgroundColor: '#ffffff',
-                        baseColor: '#6d1616',
-                        errorColor: '#d9534f',
-                        successColor: '#5bc0de',
-                    },
-                },
-            },
-        },
-        callbacks: {
-            onReady: () => console.log('Payment Brick pronto!'),
-            onSubmit: async ({ formData }) => {
-                try {
-                    console.log('Dados enviados:', formData);
-
-                    const response = await fetch('http://localhost/tcc_pingo_d-agua/eventos/eventos.php', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    });
-
-                    if (!response.ok) throw new Error(`Erro: ${response.statusText}`);
-
-                    const jsonResponse = await response.json();
-                    console.log('Resposta da API:', jsonResponse);
-
-                    switch (jsonResponse.status) {
-                        case 'approved':
-                        case 'pending':
-                        case 'in_process':
-                        case 'rejected':
-                            await renderStatusScreenBrick(jsonResponse.id);
-                            break;
-                        default:
-                            throw new Error(`Status desconhecido: ${jsonResponse.status}`);
-                    }
-                } catch (error) {
-                    console.error('Erro ao processar o pagamento:', error);
-                    alert('Erro ao processar o pagamento. Tente novamente.');
-                }
-            },
-            onError: (error) => {
-                console.error('Erro no pagamento:', error);
-            }
-        }
-    };
-
-    window.paymentBrickController = await bricksBuilder.create(
-        'payment',
-        'paymentBrick_container',
-        settings
-    );
-};
-
-// Função para renderizar o Status Screen Brick
-const renderStatusScreenBrick = async (paymentId) => {
-    const settings = {
-        initialization: { paymentId },
-        callbacks: {
-            onReady: () => {
-                document.getElementById('paymentBrick_container').style.display = 'none';
-            },
-            onError: (error) => {
-                console.error('Erro ao renderizar Status Screen Brick:', error);
-            }
-        }
-    };
-
-    window.statusScreenBrickController = await bricksBuilder.create(
-        'statusScreen',
-        'statusScreenBrick_container',
-        settings
-    );
-};
-
-// Inicializa o Payment Brick ao carregar a página
-renderPaymentBrick();
-
-</script> -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="module" src="./firebase-config.js"></script>

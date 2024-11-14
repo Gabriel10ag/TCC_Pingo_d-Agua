@@ -84,7 +84,7 @@ onAuthStateChanged(auth, async (user) => {
         if (userDocSnap.exists()) {
             const userData = userDocSnap.data();
             document.getElementById('email').value = user.email;
-
+            
             if (userData.isAdmin) {
                 document.getElementById('admin-menu').style.display = 'block';
             }
@@ -104,8 +104,8 @@ const eventoForm = document.getElementById('evento-form');
 eventoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const submitButton = e.submitter;
-    submitButton.disabled = true;
+    const submitButton = e.submitter;  // Captura o botão que foi clicado
+    submitButton.disabled = true;  // Desativa o botão para evitar múltiplas submissões
 
     const titulo = document.getElementById('titulo').value;
     const descricao = document.getElementById('descricao').value;
@@ -113,7 +113,6 @@ eventoForm.addEventListener('submit', async (e) => {
     const hora = document.getElementById('hora').value;
     const preco = document.getElementById('preco').value;
     const imagemFile = document.getElementById('imagem').files[0];
-    const id = document.getElementById('id').value;
 
     try {
         const storageRef = ref(storage, `eventos/${imagemFile.name}`);
@@ -125,7 +124,7 @@ eventoForm.addEventListener('submit', async (e) => {
             descricao: descricao,
             data: data,
             hora: hora,
-            id: id,
+           
             preco: parseFloat(preco),
             imagemUrl: imageUrl,
             criadoEm: new Date()
@@ -139,9 +138,10 @@ eventoForm.addEventListener('submit', async (e) => {
         console.error("Erro ao inserir evento: ", error);
         alert("Erro ao inserir evento.");
     } finally {
-        submitButton.disabled = false;
+        submitButton.disabled = false;  // Reativa o botão após a tentativa de submissão
     }
 });
+
 
 const eventosContainer = document.getElementById('eventos-container');
 
@@ -159,50 +159,79 @@ async function carregarEventos() {
 
 function criarCardDeEvento(evento, id) {
     const cardHtml = `
-    <div class="col-md-4 mb-4">
+        <div class="col-md-4 mb-4">
         <div class="card">
             <img src="${evento.imagemUrl}" class="card-img-top" alt="${evento.titulo}">
             <div class="card-body">
-                <h5 class="card-title">${evento.titulo}</h5>
-                <p class="card-text">${evento.descricao}</p>
+                <h5 class="card-title" id="titulocard">${evento.titulo}</h5>
+                <p class="card-text" id="textocard">${evento.descricao}</p>
                 <p class="card-text"><small class="text-muted">${evento.data} às ${evento.hora}</small></p>
             </div>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3 class="card-preco"><p class="card-text">Preço: R$ ${evento.preco.toFixed(2)}</p></h3>
-                <input type="number" class="form-control quantidade-ingressos" min="1" value="1" style="width: 100;" data-preco="${evento.preco}">
+            <div class="mb-5 d-flex justify-content-around">
+                <h3 class="card-preco" id="precocard"><p class="card-text">Preço: R$ ${evento.preco.toFixed(2)}</p></h3>
+                <button class="btn btn-success btn-comprar" data-id="${id}" data-preco="${evento.preco}">Comprar</button>
+
             </div>
-          
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <p class="total-preco">Total: R$ ${evento.preco.toFixed(2)}</p>
-                    <input type="hidden" name="vl" class="input-total-preco" value="${evento.preco.toFixed(2)}">
-                    <input type="hidden" name="eventId" value="${id}">
-                    <input type="hidden" name="quantidade" class="input-quantidade" value="1">
-                    <button type="submit" class="btn btn-success btn-comprar">Comprar</button>
-                </div>
-       
         </div>
     </div>
     `;
     eventosContainer.insertAdjacentHTML('beforeend', cardHtml);
+}
 
-    // Adiciona o evento para atualizar o preço total e a quantidade
-    const cardElement = eventosContainer.lastElementChild;
-    const quantidadeInput = cardElement.querySelector('.quantidade-ingressos');
-    const totalPrecoElement = cardElement.querySelector('.total-preco');
-    const totalInput = cardElement.querySelector('.input-total-preco');
-    const quantidadeHiddenInput = cardElement.querySelector('.input-quantidade');
 
+// Function to open the payment modal and fill the information
+function abrirModalPagamento(event) {
+    const eventId = event.target.getAttribute('data-id');
+    const preco = parseFloat(event.target.getAttribute('data-preco')); // Get the price from the button
+
+    // Get the modal element
+    const pagamentoModal = new bootstrap.Modal(document.getElementById('pagamento-modal'));
+    pagamentoModal.show();
+
+    // Elements in the modal
+    const quantidadeInput = document.getElementById('quantidade');
+    const totalInput = document.getElementById('total');
+    const valorTotalPagamentoElement = document.getElementById('valor-total-pagamento');
+    const valorInput = document.getElementById('valor'); // Hidden input for total price
+
+    // Initialize the quantity and total values
+    quantidadeInput.value = 1; // Set default quantity to 1
+    totalInput.value = `R$ ${preco.toFixed(2)}`; // Set the initial total value (price * 1)
+
+    // Set the displayed total value inside the modal
+    valorTotalPagamentoElement.textContent = `R$ ${preco.toFixed(2)}`;
+    valorInput.value = preco.toFixed(2); // Set the hidden input with the total value
+
+    // Update the total price when the quantity input changes
     quantidadeInput.addEventListener('input', function () {
-        const quantidade = parseInt(this.value, 10) || 1;
-        const preco = parseFloat(this.getAttribute('data-preco'));
+        const quantidade = parseInt(this.value, 10);
         const total = preco * quantidade;
-        totalPrecoElement.textContent = `Total: R$ ${total.toFixed(2)}`;
 
-        // Atualiza os inputs ocultos com o valor total e a quantidade
-        totalInput.value = total.toFixed(2);
-        quantidadeHiddenInput.value = quantidade;
+        // Update the total input field and the displayed total in the <span>
+        totalInput.value = `R$ ${total.toFixed(2)}`;
+        valorTotalPagamentoElement.textContent = `R$ ${total.toFixed(2)}`;
+        valorInput.value = total.toFixed(2); // Update the hidden input with the new total
     });
 }
+
+// Attach the event listener to all "Comprar" buttons
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('btn-comprar')) {
+        e.preventDefault(); // Prevent form submission or page reload
+        abrirModalPagamento(e); // Open the payment modal
+    }
+});
+
+
+
+
+// Adicionar evento de clique nos botões de "Comprar"
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('btn-comprar')) {
+        abrirModalPagamento(e);
+    }
+});
+
 
 async function excluirEvento(eventId, imagemUrl) {
     try {
@@ -220,10 +249,38 @@ async function excluirEvento(eventId, imagemUrl) {
 
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('btn-excluir')) {
-        const eventId = e.target.getAttribute('data-event-id');
-        const imagemUrl = e.target.getAttribute('data-event-imagem-url');
+        const eventId = e.target.getAttribute('data-id');
+        const imagemUrl = e.target.getAttribute('data-imagem');
         excluirEvento(eventId, imagemUrl);
     }
+});
+
+const excluirEventosButton = document.querySelector('#admin-menu .botoes .botao:nth-child(2)');
+
+excluirEventosButton.addEventListener('click', async () => {
+    const listaEventosExcluir = document.getElementById('lista-eventos-excluir');
+    listaEventosExcluir.innerHTML = '';
+
+    const eventosSnapshot = await getDocs(collection(db, 'eventos'));
+    eventosSnapshot.forEach((doc) => {
+        const evento = doc.data();
+        const eventoItem = document.createElement('a');
+        eventoItem.href = "#";
+        eventoItem.classList.add('list-group-item', 'list-group-item-action');
+        eventoItem.textContent = `${evento.titulo} - ${evento.data}`;
+
+        eventoItem.addEventListener('click', async () => {
+            if (confirm(`Tem certeza que deseja excluir o evento "${evento.titulo}"?`)) {
+                await excluirEvento(doc.id, evento.imagemUrl);
+                eventoItem.remove();
+            }
+        });
+
+        listaEventosExcluir.appendChild(eventoItem);
+    });
+
+    const excluirEventoModal = new bootstrap.Modal(document.getElementById('excluir-evento-modal'));
+    excluirEventoModal.show();
 });
 
 // Exibir o modal de pagamento ao clicar no botão "Comprar"
@@ -250,6 +307,4 @@ document.addEventListener('click', function (e) {
 
 
 
-
-// Carregar eventos ao carregar a página
-window.addEventListener('DOMContentLoaded', carregarEventos);
+document.addEventListener('DOMContentLoaded', carregarEventos);

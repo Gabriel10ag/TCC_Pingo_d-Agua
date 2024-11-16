@@ -179,58 +179,6 @@ function criarCardDeEvento(evento, id) {
 }
 
 
-// Function to open the payment modal and fill the information
-function abrirModalPagamento(event) {
-    const eventId = event.target.getAttribute('data-id');
-    const preco = parseFloat(event.target.getAttribute('data-preco')); // Get the price from the button
-
-    // Get the modal element
-    const pagamentoModal = new bootstrap.Modal(document.getElementById('pagamento-modal'));
-    pagamentoModal.show();
-
-    // Elements in the modal
-    const quantidadeInput = document.getElementById('quantidade');
-    const totalInput = document.getElementById('total');
-    const valorTotalPagamentoElement = document.getElementById('valor-total-pagamento');
-    const valorInput = document.getElementById('valor'); // Hidden input for total price
-
-    // Initialize the quantity and total values
-    quantidadeInput.value = 1; // Set default quantity to 1
-    totalInput.value = `R$ ${preco.toFixed(2)}`; // Set the initial total value (price * 1)
-
-    // Set the displayed total value inside the modal
-    valorTotalPagamentoElement.textContent = `R$ ${preco.toFixed(2)}`;
-    valorInput.value = preco.toFixed(2); // Set the hidden input with the total value
-
-    // Update the total price when the quantity input changes
-    quantidadeInput.addEventListener('input', function () {
-        const quantidade = parseInt(this.value, 10);
-        const total = preco * quantidade;
-
-        // Update the total input field and the displayed total in the <span>
-        totalInput.value = `R$ ${total.toFixed(2)}`;
-        valorTotalPagamentoElement.textContent = `R$ ${total.toFixed(2)}`;
-        valorInput.value = total.toFixed(2); // Update the hidden input with the new total
-    });
-}
-
-// Attach the event listener to all "Comprar" buttons
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('btn-comprar')) {
-        e.preventDefault(); // Prevent form submission or page reload
-        abrirModalPagamento(e); // Open the payment modal
-    }
-});
-
-
-
-
-// Adicionar evento de clique nos botões de "Comprar"
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('btn-comprar')) {
-        abrirModalPagamento(e);
-    }
-});
 
 
 async function excluirEvento(eventId, imagemUrl) {
@@ -305,6 +253,138 @@ document.addEventListener('click', function (e) {
     }
 });
 
+function abrirModalPagamento(event) {
+    const eventId = event.target.getAttribute('data-id');
+    const preco = parseFloat(event.target.getAttribute('data-preco'));
+
+    const eventIdInput = document.getElementById('eventid');
+    const valorInput = document.getElementById('valor');
+    const quantidadeInput = document.getElementById('quantidade');
+    const qtInput = document.getElementById('qt'); // Input oculto para quantidade
+    const totalInput = document.getElementById('total');
+    const valorTotalPagamentoElement = document.getElementById('valor-total-pagamento');
+
+    if (eventIdInput) eventIdInput.value = eventId;
+    if (valorInput) valorInput.value = preco.toFixed(2);
+    if (qtInput) qtInput.value = quantidadeInput.value; // Inicializa com o valor inicial de quantidade
+
+    quantidadeInput.value = 1;
+    totalInput.value = `R$ ${preco.toFixed(2)}`;
+    valorTotalPagamentoElement.textContent = `R$ ${preco.toFixed(2)}`;
+
+    // Atualiza o total e o valor oculto 'qt' ao alterar a quantidade
+    quantidadeInput.addEventListener('input', function () {
+        const quantidade = parseInt(this.value, 10);
+        const total = preco * quantidade;
+
+        totalInput.value = `R$ ${total.toFixed(2)}`;
+        valorTotalPagamentoElement.textContent = `R$ ${total.toFixed(2)}`;
+        valorInput.value = total.toFixed(2);
+
+        if (qtInput) {
+            qtInput.value = quantidade; // Atualiza o input oculto
+        }
+    });
+
+    document.querySelectorAll('button[data-link]').forEach(button => {
+        button.addEventListener('click', function () {
+            const linkBase = this.getAttribute('data-link');
+            const valor = valorInput.value;
+            const quantidade = qtInput.value; // Usa o valor atualizado do input oculto
+            window.location.href = `${linkBase}?vl=${valor}&eventid=${eventId}&quantidade=${quantidade}`;
+        });
+    });
+
+    const pagamentoModal = new bootstrap.Modal(document.getElementById('pagamento-modal'));
+    pagamentoModal.show();
+}
+
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('btn-comprar')) {
+        e.preventDefault();
+        abrirModalPagamento(e);
+    }
+});
+function mostrarTickets(userId) {
+    // Referência para a subcoleção de pagamentos do usuário
+    const pagamentoRef = collection(db, 'users', userId, 'pagamento');
+    
+    // Buscando todos os documentos na subcoleção de pagamentos
+    getDocs(pagamentoRef)
+      .then((querySnapshot) => {
+        // Verifica se há documentos na coleção
+        if (querySnapshot.empty) {
+          // Exibe a mensagem dentro do ticket-container
+          const ticketContainer = document.getElementById('ticket-container');
+          ticketContainer.innerHTML = ''; // Limpa o container
+          const mensagem = document.createElement('p');
+          mensagem.textContent = 'Nenhum pagamento encontrado para este usuário.';
+          ticketContainer.appendChild(mensagem); // Adiciona a mensagem ao container
+          return;
+        }
+  
+        // Container para exibir os tickets
+        const ticketContainer = document.getElementById('ticket-container');
+        ticketContainer.innerHTML = ''; // Limpa o container antes de adicionar novos elementos
+  
+        // Iterando por todos os pagamentos
+        querySnapshot.forEach((docSnapshot) => {
+          const pagamentoData = docSnapshot.data(); // Obtém os dados do pagamento
+          const eventId = pagamentoData.eventoid; // Obtém o ID do evento
+          const quantidade = pagamentoData.quantidade || 1; // Obtém a quantidade ou assume 1 como padrão
+  
+          // Buscando o evento correspondente na coleção "eventos"
+          const eventoRef = doc(db, 'eventos', eventId);
+          getDoc(eventoRef)
+            .then((eventoDoc) => {
+              if (eventoDoc.exists()) {
+                const eventoData = eventoDoc.data();
+                const titulo = eventoData.titulo;
+                const imagemUrl = eventoData.imagemUrl;
+                const preco = eventoData.preco;
+                const data = eventoData.data; // Data do evento
+                const total = preco * quantidade; // Calcula o preço total baseado na quantidade
+  
+                // Criando um elemento HTML para o ticket
+                const ticketHtml = `
+                  <div class="ticket-card">
+                    <h5>${titulo}</h5>
+                    <img src="${imagemUrl}" alt="${titulo}" style="width: 100px; height: auto;">
+                    <p>Data do Evento: ${data}</p>
+                    <p>Preço unitário: R$ ${preco.toFixed(2)}</p>
+                    <p>Quantidade: ${quantidade}</p>
+                    <p>Total: R$ ${total.toFixed(2)}</p>
+                  </div>
+                `;
+                ticketContainer.insertAdjacentHTML('beforeend', ticketHtml); // Adiciona o ticket ao container
+              } else {
+                console.log('Evento não encontrado para o ID:', eventId);
+              }
+            })
+            .catch((error) => {
+              console.error('Erro ao buscar evento:', error);
+            });
+        });
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar pagamentos:', error);
+      });
+  }
+  
+  
+
+
+// Verifica o estado de autenticação do usuário
+auth.onAuthStateChanged((user) => {
+    if (user) {
+      console.log('Usuário logado:', user.email);
+      const userId = user.uid; // Obtendo o UID do usuário logado
+      mostrarTickets(userId); // Chama a função para mostrar o ticket do usuário
+    } else {
+      alert('Você precisa estar logado para acessar esta página.');
+      window.location.href = '../../login/login.html'; // Redireciona para a página de login
+    }
+});
 
 
 document.addEventListener('DOMContentLoaded', carregarEventos);

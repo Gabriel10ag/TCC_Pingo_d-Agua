@@ -348,12 +348,15 @@ function mostrarTickets(userId) {
                 // Criando um elemento HTML para o ticket
                 const ticketHtml = `
                   <div class="ticket-card">
-                    <h5>${titulo}</h5>
-                    <img src="${imagemUrl}" alt="${titulo}" style="width: 100px; height: auto;">
-                    <p>Data do Evento: ${data}</p>
-                    <p>Preço unitário: R$ ${preco.toFixed(2)}</p>
-                    <p>Quantidade: ${quantidade}</p>
-                    <p>Total: R$ ${total.toFixed(2)}</p>
+
+                    <img src="${imagemUrl}" alt="${titulo}" class="fotocard">
+                    <div class="ctnc">
+                     <h5>${titulo}</h5>
+                    <p class="datacard">Data do Evento: ${data}</p>
+                    <p class="precocard">Preço unitário: R$ ${preco.toFixed(2)}</p>
+                    <p class="qtcard">Quantidade: ${quantidade}</p>
+                    <p class="totalcard">Total: R$ ${total.toFixed(2)}</p>
+                    </div>
                   </div>
                 `;
                 ticketContainer.insertAdjacentHTML('beforeend', ticketHtml); // Adiciona o ticket ao container

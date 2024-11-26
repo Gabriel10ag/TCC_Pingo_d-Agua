@@ -5,6 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilo do modal */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+            align-items: center; /* Centraliza o conteúdo verticalmente */
+            justify-content: center; /* Centraliza o conteúdo horizontalmente */
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            color: #5b1414;
+            font-size: 30px;
+        }
+        .modal button {
+            
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #ccc;
+            color: #5b1414;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .modal button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div class="login-container">
@@ -20,13 +59,43 @@
 
     <div id="loader" class="loader"></div>
 
+    <!-- Modal -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <p id="modalMessage"></p>
+            <button id="modalCloseBtn">Fechar</button>
+        </div>
+    </div>
+
     <script type="module">
         import { loginUser, resetPassword } from './firebase-app.js';
 
         const loginForm = document.getElementById('login-form');
         const loader = document.getElementById('loader');
         const forgotPasswordLink = document.getElementById('forgot-password');
+        const modal = document.getElementById('customModal');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
 
+        // Função para exibir o modal com a mensagem
+        function showModal(message) {
+            modalMessage.textContent = message; // Define a mensagem
+            modal.style.display = 'flex'; // Exibe o modal
+        }
+
+        // Fechar o modal ao clicar no botão "Fechar"
+        modalCloseBtn.onclick = () => {
+            modal.style.display = 'none';
+        };
+
+        // Fechar o modal ao clicar fora do conteúdo
+        window.onclick = (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+
+        // Login
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             loader.style.display = 'flex'; 
@@ -36,30 +105,33 @@
 
             try {
                 await loginUser(email, password);
-                alert('Login bem-sucedido!');
-                window.location.href = '../home/index.html';
+                showModal('Login bem-sucedido!'); // Exibe modal
+                setTimeout(() => {
+                    window.location.href = '../home/index.html';
+                }, 2000); // Redireciona após 2 segundos
             } catch (error) {
-                alert('Erro no login: ' + error.message);
+                showModal('Erro no login,   confira novamente o email ou a senha.'); // Exibe modal
             } finally {
                 loader.style.display = 'none'; 
             }
         });
 
+        // Esqueci a senha
         forgotPasswordLink.addEventListener('click', async (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
 
             if (!email) {
-                alert('Por favor, insira seu e-mail para redefinir a senha.');
+                showModal('Por favor, insira seu e-mail para redefinir a senha.'); // Exibe modal
                 return;
             }
 
             try {
                 await resetPassword(email);
-                alert('E-mail de redefinição de senha enviado com sucesso! Verifique sua caixa de entrada.');
+                showModal('E-mail de redefinição de senha enviado com sucesso! Verifique sua caixa de entrada.'); // Exibe modal
             } catch (error) {
                 console.error('Erro ao enviar e-mail de redefinição:', error);
-                alert('Erro ao enviar e-mail de redefinição: ' + error.message);
+                showModal('Erro ao enviar e-mail de redefinição: ' + error.message); // Exibe modal
             }
         });
     </script>

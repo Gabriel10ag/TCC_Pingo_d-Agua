@@ -5,6 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilo do modal */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+            align-items: center; /* Centraliza o conteúdo verticalmente */
+            justify-content: center; /* Centraliza o conteúdo horizontalmente */
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            color: #5b1414;
+            font-size: 30px;
+        }
+        .modal button {
+            
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #ccc;
+            color: #5b1414;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .modal button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div class="login-container">
@@ -20,13 +59,42 @@
 
     <div id="loader" class="loader"></div>
 
+    <!-- Modal -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <p id="modalMessage"></p>
+            <button id="modalCloseBtn">Fechar</button>
+        </div>
+    </div>
 
     <script type="module">
         import { registerUser } from './firebase-app.js';
 
         const registerForm = document.getElementById('register-form');
         const loader = document.getElementById('loader');
+        const modal = document.getElementById('customModal');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
 
+        // Função para exibir o modal com uma mensagem
+        function showModal(message) {
+            modalMessage.textContent = message; // Define a mensagem
+            modal.style.display = 'flex'; // Exibe o modal
+        }
+
+        // Fechar o modal ao clicar no botão "Fechar"
+        modalCloseBtn.onclick = () => {
+            modal.style.display = 'none';
+        };
+
+        // Fechar o modal ao clicar fora do conteúdo
+        window.onclick = (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+
+        // Evento de envio do formulário
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             loader.style.display = 'flex'; 
@@ -37,10 +105,12 @@
 
             try {
                 await registerUser(email, password, fullName);
-                alert('Usuário cadastrado com sucesso!');
-                window.location.href = 'login.html';
+                showModal('Usuário cadastrado com sucesso!');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000); // Redireciona após 2 segundos
             } catch (error) {
-                alert('Erro no cadastro: ' + error.message);
+                showModal('Erro no cadastro: ' + error.message);
             } finally {
                 loader.style.display = 'none'; 
             }

@@ -385,7 +385,7 @@ auth.onAuthStateChanged((user) => {
       mostrarTickets(userId); // Chama a função para mostrar o ticket do usuário
     } else {
       alert('Você precisa estar logado para acessar esta página.');
-      window.location.href = '../../login/login.html'; // Redireciona para a página de login
+      window.location.href = '../login/login.html'; // Redireciona para a página de login
     }
 });
 

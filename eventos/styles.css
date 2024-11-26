@@ -560,14 +560,13 @@ nav {
     display: flex;
     height: 100%;
     flex-direction: column;
-    gap: 10px;
+    gap: 30px;
     overflow-y: auto; /* Adiciona barra de rolagem vertical */
 }
 .ticket-card{
     display: flex;
     width: 100%;
     height: 26vh;
-    padding: 5px;
     border-radius: 10px;
     box-shadow: 1px 1px 10px  black;
     border: solid 2px black;
@@ -576,11 +575,14 @@ nav {
     display: flex;
     flex-direction: column;
     margin: auto;
+    padding: 10px;
     text-align: center;
 }
 .fotocard{
     width: 45%;
     height: 100%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 .dataard{

@@ -356,6 +356,7 @@ function mostrarTickets(userId) {
                     <p class="precocard">Preço unitário: R$ ${preco.toFixed(2)}</p>
                     <p class="qtcard">Quantidade: ${quantidade}</p>
                     <p class="totalcard">Total: R$ ${total.toFixed(2)}</p>
+                    
                     </div>
                   </div>
                 `;
@@ -377,17 +378,71 @@ function mostrarTickets(userId) {
   
 
 
+//// Função para exibir o modal com uma mensagem
+function showModal(message, redirectUrl = null) {
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+    modal.style.position = 'fixed';
+    modal.style.top = 0;
+    modal.style.left = 0;
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    modal.style.zIndex = 1000;
+
+    const modalContent = document.createElement('div');
+    modalContent.style.backgroundColor = '#fff';
+    modalContent.style.padding = '20px';
+    modalContent.style.borderRadius = '8px';
+    modalContent.style.color = '#5b1414';
+    modalContent.style.fontSize = '30px';
+    modalContent.style.textAlign = 'center';
+    modalContent.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.2)';
+    modalContent.style.width = '300px';
+
+    const messageParagraph = document.createElement('p');
+    messageParagraph.textContent = message;
+
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Fechar';
+    closeButton.style.marginTop = '10px';
+    closeButton.style.padding = '10px 20px';
+    closeButton.style.backgroundColor = '#ccc';
+    closeButton.style.color = '#5b1414';
+    closeButton.style.border = 'none';
+    closeButton.style.borderRadius = '5px';
+    closeButton.style.cursor = 'pointer';
+
+    closeButton.onclick = () => {
+        modal.remove();
+        if (redirectUrl) {
+            window.location.href = redirectUrl;
+        }
+    };
+
+    modalContent.appendChild(messageParagraph);
+    modalContent.appendChild(closeButton);
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+}
+
 // Verifica o estado de autenticação do usuário
 auth.onAuthStateChanged((user) => {
     if (user) {
-      console.log('Usuário logado:', user.email);
-      const userId = user.uid; // Obtendo o UID do usuário logado
-      mostrarTickets(userId); // Chama a função para mostrar o ticket do usuário
+        console.log('Usuário logado:', user.email);
+        const userId = user.uid; // Obtendo o UID do usuário logado
+        mostrarTickets(userId); // Chama a função para mostrar o ticket do usuário
     } else {
-      alert('Você precisa estar logado para acessar esta página.');
-      window.location.href = '../login/login.html'; // Redireciona para a página de login
+        showModal(
+            'Você precisa estar logado para acessar esta página.',
+            '../login/login.html'
+        );
     }
 });
+
 
 
 document.addEventListener('DOMContentLoaded', carregarEventos);

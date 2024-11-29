@@ -1,7 +1,9 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-storage.js';
-import { getAuth, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
-import { getFirestore, doc, getDoc, collection, addDoc, getDocs, deleteDoc } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
+// Importações do Firebase SDK
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js';
+import { getAuth, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
+import { getFirestore, collection, query, where, getDocs, doc, getDoc, addDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyDjbdj0Q2GLbTQZK4Qw-I2PZh2Foa0ObPI",
@@ -55,6 +57,8 @@ const storage = getStorage(app);
     }
 });
 
+
+// Event listener para o botão "show-events"
 document.getElementById('show-events').addEventListener('click', async () => {
     const eventsListDiv = document.getElementById('events-list');
     eventsListDiv.innerHTML = ''; // Limpa a div antes de mostrar novos eventos
@@ -90,11 +94,11 @@ document.getElementById('show-events').addEventListener('click', async () => {
 
     // Consultar a coleção "eventos" no Firestore para eventos do mês
     try {
-        const eventosRef = collection(db, 'eventos');
-        const q = query(eventosRef, where('data', '>=', startDate), where('data', '<=', endDate));
+        const eventosRef = collection(db, 'eventos'); // Obtém a referência da coleção
+        const q = query(eventosRef, where('data', '>=', startDate), where('data', '<=', endDate)); // Cria a consulta
 
         // Executar a consulta e mostrar os resultados
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await getDocs(q); // Obtém os documentos com base na consulta
         if (querySnapshot.empty) {
             eventsListDiv.innerHTML = '<p>Nenhum evento encontrado para este mês.</p>';
         } else {
@@ -302,3 +306,9 @@ auth.onAuthStateChanged((user) => {
         );
     }
 });
+
+
+
+
+
+

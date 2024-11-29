@@ -118,17 +118,20 @@ function openLightbox(index) {
     lightbox.style.display = 'flex'; // Exibe a lightbox
 }
 
+window.closeLightbox = closeLightbox; // Adiciona a função closeLightbox ao escopo global
 function closeLightbox() {
     const lightbox = document.getElementById('lightbox');
     lightbox.style.display = 'none'; // Oculta a lightbox
 }
 
+window.prevImage = prevImage; // Adiciona a função prevImage ao escopo global
 function prevImage(event) {
     event.stopPropagation(); // Impede que o evento clique na lightbox feche a lightbox
     currentIndex = (currentIndex > 0) ? currentIndex - 1 : currentImages.length - 1;
     updateLightboxImage();
 }
 
+window.nextImage = nextImage; // Adiciona a função nextImage ao escopo global
 function nextImage(event) {
     event.stopPropagation(); // Impede que o evento clique na lightbox feche a lightbox
     currentIndex = (currentIndex < currentImages.length - 1) ? currentIndex + 1 : 0;

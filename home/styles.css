@@ -113,7 +113,7 @@ header {
 
     .hero {
         position: relative; /* Adicione esta linha */
-        background-image: url(../img/image1.jpeg);
+        background-image: url(../img/image15.jpeg);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
